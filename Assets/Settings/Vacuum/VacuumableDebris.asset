@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59ab2c9277ada984f9a881f122509658, type: 3}
+  m_Name: VacuumableDebris
+  m_EditorClassIdentifier: Assembly-CSharp::Hedgewitch.Vacuum.Objects.VacuumableProfile
+  category: 4
+  collectionValue: 0
+  vacuumMass: 0.45
+  suctionResistance: 0
+  canBeCaptured: 1
+  captureRadiusBonus: 0
+  liftMultiplier: 1.2
+  swirlMultiplier: 1.4
+  wobbleMultiplier: 2.6
+  funnelMultiplier: 1.3
+  overrideRigidbody: 1
+  rigidbodyMass: 0.3
+  linearDamping: 0
+  angularDamping: 0.05
+  captureOutcome: 0

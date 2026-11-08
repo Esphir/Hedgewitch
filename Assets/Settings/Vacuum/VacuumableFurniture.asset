@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59ab2c9277ada984f9a881f122509658, type: 3}
+  m_Name: VacuumableFurniture
+  m_EditorClassIdentifier: Assembly-CSharp::Hedgewitch.Vacuum.Objects.VacuumableProfile
+  category: 32
+  collectionValue: 0
+  vacuumMass: 30
+  suctionResistance: 0
+  canBeCaptured: 0
+  captureRadiusBonus: 0
+  liftMultiplier: 0.05
+  swirlMultiplier: 0.2
+  wobbleMultiplier: 0.15
+  funnelMultiplier: 0.25
+  overrideRigidbody: 1
+  rigidbodyMass: 120
+  linearDamping: 0
+  angularDamping: 0.05
+  captureOutcome: 2
