@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Hedgewitch.Vacuum.VacuumSettings
   maxDistance: 9
   minDistance: 0.15
-  horizontalConeAngle: 65
-  verticalConeAngle: 60
+  horizontalConeAngle: 55
+  verticalConeAngle: 50
   intakeRadius: 1.6
   coneHysteresis: 0.25
   detectionLayers:

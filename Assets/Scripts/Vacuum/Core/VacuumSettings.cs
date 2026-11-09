@@ -14,10 +14,10 @@ namespace Hedgewitch.Vacuum
         [Min(0f)] public float minDistance = 0.15f;
 
         [Tooltip("Total width of the suction cone, in degrees.")]
-        [Range(1f, 179f)] public float horizontalConeAngle = 65f;
+        [Range(1f, 179f)] public float horizontalConeAngle = 55f;
 
         [Tooltip("Total height of the suction cone, in degrees. Narrow values leave a dead zone under the nozzle, where the player has to tip the mouth down at anything low and close before it is drawn in.")]
-        [Range(1f, 179f)] public float verticalConeAngle = 60f;
+        [Range(1f, 179f)] public float verticalConeAngle = 50f;
 
         [Tooltip("Radius around the mouth in which anything in front of the intake is drawn in whatever the cone angle says. Close to a real nozzle, air converges from every direction, and this is what lets the player hoover a small object by their feet without aiming at it. 0 disables it and restores the hard cone.")]
         [Min(0f)] public float intakeRadius = 1.6f;

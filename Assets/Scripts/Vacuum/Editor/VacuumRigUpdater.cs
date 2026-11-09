@@ -67,13 +67,13 @@ namespace Hedgewitch.Vacuum.EditorTools
             VacuumSettings settings = AssetDatabase.LoadAssetAtPath<VacuumSettings>(SettingsPath);
             if (settings != null)
             {
-                if (!Mathf.Approximately(settings.horizontalConeAngle, 65f)
-                    || !Mathf.Approximately(settings.verticalConeAngle, 60f))
+                if (!Mathf.Approximately(settings.horizontalConeAngle, 55f)
+                    || !Mathf.Approximately(settings.verticalConeAngle, 50f))
                 {
                     log += $"\n  cone {settings.horizontalConeAngle:0.#}x{settings.verticalConeAngle:0.#}"
-                           + " -> 65x60 deg";
-                    settings.horizontalConeAngle = 65f;
-                    settings.verticalConeAngle = 60f;
+                           + " -> 55x50 deg";
+                    settings.horizontalConeAngle = 55f;
+                    settings.verticalConeAngle = 50f;
                     changed = true;
                 }
 

@@ -6350,6 +6350,7 @@ MonoBehaviour:
   animatorLoadParameter: VacuumLoad
   autoConfigureAirflow: 1
   airflowTravelTime: 0.4
+  airflowAcceleration: 1
   airflowRateAtFullPower: 160
   debrisRateAtFullPower: 40
   nozzleSwell: 0.08

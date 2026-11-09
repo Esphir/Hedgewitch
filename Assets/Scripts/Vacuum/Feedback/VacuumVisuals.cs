@@ -36,6 +36,9 @@ namespace Hedgewitch.Vacuum.Feedback
         [Tooltip("Seconds a particle takes to travel the length of the cone.")]
         [Min(0.05f)] [SerializeField] private float airflowTravelTime = 0.4f;
 
+        [Tooltip("1 moves particles at a constant speed; higher values start them slow and whip them into the mouth.")]
+        [Range(1f, 3f)] [SerializeField] private float airflowAcceleration = 1.6f;
+
         [Min(0f)] [SerializeField] private float airflowRateAtFullPower = 160f;
 
         [Min(0f)] [SerializeField] private float debrisRateAtFullPower = 40f;
@@ -53,6 +56,7 @@ namespace Hedgewitch.Vacuum.Feedback
 
         [Min(0.01f)] [SerializeField] private float smoothing = 10f;
 
+        private ParticleSystem.Particle[] particleBuffer;
         private ParticleSystem.EmissionModule airflowEmission;
         private ParticleSystem.EmissionModule debrisEmission;
         private ParticleSystem.EmissionModule strainEmission;
@@ -134,36 +138,103 @@ namespace Hedgewitch.Vacuum.Feedback
             float range = settings.maxDistance;
             float radius = VacuumNozzle.ConeRadiusAt(range, Mathf.Max(settings.HorizontalHalfAngle, settings.VerticalHalfAngle));
 
-            // Sit the emitter at the far end of the cone, looking back down the barrel.
+            // Sit the emitter on the mouth, looking down the barrel, so its local space is the
+            // cone's own space: +Z along the axis, X and Y across it.
             if (nozzle != null && airflowParticles.transform.parent != null)
             {
                 Transform emitter = airflowParticles.transform;
-                emitter.position = nozzle.Origin + nozzle.Direction * range;
-                emitter.rotation = Quaternion.LookRotation(-nozzle.Direction, nozzle.Up);
+                emitter.position = nozzle.Origin;
+                emitter.rotation = nozzle.Rotation;
             }
 
+            // Particles are placed by hand every frame (see ShapeAirflowToCone), so the built-in
+            // shape and velocity modules must not move them.
             ParticleSystem.MainModule main = airflowParticles.main;
             main.simulationSpace = ParticleSystemSimulationSpace.Local;
             main.startLifetime = airflowTravelTime;
-            main.startSpeed = range / airflowTravelTime;
+            main.startSpeed = 0f;
             main.startSize = Mathf.Max(0.05f, radius * 0.12f);
+            main.maxParticles = Mathf.Max(main.maxParticles, Mathf.CeilToInt(airflowRateAtFullPower * airflowTravelTime * 1.5f));
 
             ParticleSystem.ShapeModule shape = airflowParticles.shape;
-            shape.enabled = true;
-            shape.shapeType = ParticleSystemShapeType.Circle;
-            shape.radius = Mathf.Max(0.05f, radius);
-            shape.radiusThickness = 1f;
+            shape.enabled = false;
 
-            // A negative radial velocity pulls the stream onto the axis as it arrives, which is
-            // what makes it read as a funnel instead of a curtain.
             ParticleSystem.VelocityOverLifetimeModule velocity = airflowParticles.velocityOverLifetime;
-            velocity.enabled = true;
-            velocity.space = ParticleSystemSimulationSpace.Local;
-            velocity.radial = new ParticleSystem.MinMaxCurve(-radius / airflowTravelTime);
+            velocity.enabled = false;
 
             ParticleSystem.SizeOverLifetimeModule size = airflowParticles.sizeOverLifetime;
             size.enabled = true;
             size.size = new ParticleSystem.MinMaxCurve(1f, AnimationCurve.Linear(0f, 1f, 1f, 0.2f));
+        }
+
+        private void LateUpdate()
+        {
+            if (autoConfigureAirflow)
+            {
+                ShapeAirflowToCone();
+            }
+        }
+
+        /// <summary>
+        /// Places every airflow particle on a straight line from a point on the far end of the
+        /// suction cone to the mouth. Each particle keeps its own spot on the cone's elliptical
+        /// cross-section (derived from its random seed), so the stream fills the exact cone the
+        /// detector uses, follows the nozzle as it aims, and converges on the mouth.
+        /// </summary>
+        private void ShapeAirflowToCone()
+        {
+            if (airflowParticles == null || controller == null || controller.Settings == null)
+            {
+                return;
+            }
+
+            int count = airflowParticles.particleCount;
+            if (count == 0)
+            {
+                return;
+            }
+
+            if (particleBuffer == null || particleBuffer.Length < count)
+            {
+                particleBuffer = new ParticleSystem.Particle[Mathf.NextPowerOfTwo(count)];
+            }
+
+            VacuumSettings settings = controller.Settings;
+            float range = settings.maxDistance;
+            float halfWidth = VacuumNozzle.ConeRadiusAt(range, settings.HorizontalHalfAngle);
+            float halfHeight = VacuumNozzle.ConeRadiusAt(range, settings.VerticalHalfAngle);
+
+            count = airflowParticles.GetParticles(particleBuffer, count);
+            for (int i = 0; i < count; i++)
+            {
+                ref ParticleSystem.Particle particle = ref particleBuffer[i];
+
+                uint seed = particle.randomSeed;
+                float angle = Hash01(seed) * Mathf.PI * 2f;
+                float spread = Mathf.Sqrt(Hash01(seed ^ 0x9E3779B9u)); // uniform over the disc
+
+                float age = 1f - particle.remainingLifetime / Mathf.Max(0.0001f, particle.startLifetime);
+                float travelled = Mathf.Pow(Mathf.Clamp01(age), airflowAcceleration);
+                float along = 1f - travelled; // 1 at the far end of the cone, 0 at the mouth
+
+                particle.position = new Vector3(
+                    Mathf.Cos(angle) * spread * halfWidth * along,
+                    Mathf.Sin(angle) * spread * halfHeight * along,
+                    range * along);
+                particle.velocity = Vector3.zero;
+            }
+
+            airflowParticles.SetParticles(particleBuffer, count);
+        }
+
+        private static float Hash01(uint x)
+        {
+            x ^= x >> 16;
+            x *= 0x7feb352du;
+            x ^= x >> 15;
+            x *= 0x846ca68bu;
+            x ^= x >> 16;
+            return (x & 0xFFFFFFu) / 16777216f;
         }
 
         private void UpdateParticles()
