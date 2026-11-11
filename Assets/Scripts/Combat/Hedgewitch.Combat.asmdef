@@ -1,0 +1,16 @@
+{
+    "name": "Hedgewitch.Combat",
+    "rootNamespace": "Hedgewitch.Combat",
+    "references": [
+        "Hedgewitch.Vacuum"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
