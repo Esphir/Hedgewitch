@@ -2,13 +2,9 @@ using UnityEngine;
 
 namespace Hedgewitch.Combat
 {
-    /// <summary>
-    /// A few hundredths of a second of near-frozen time when a heavy blow lands. Small as it is,
-    /// it is a large part of why a hit feels like it connected.
-    /// </summary>
     public sealed class HitStop : MonoBehaviour
     {
-        /// <summary>Global switch, so tests and tools can turn the effect off.</summary>
+        /// Global switch, so tests and tools can turn the effect off.
         public static bool Enabled = true;
 
         private const float FrozenScale = 0.05f;
@@ -56,7 +52,7 @@ namespace Hedgewitch.Combat
                 return;
             }
 
-            // Real time, since game time is what is being frozen.
+            // Real time
             remaining -= Time.unscaledDeltaTime;
             if (remaining <= 0f)
             {
