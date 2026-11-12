@@ -7,12 +7,7 @@ namespace Hedgewitch.Combat
     /// How a body physically answers a hit: it is shoved along the hit, knocked up if the hit
     /// says so, flashes, and loses control of itself for the stagger time.
     /// </summary>
-    /// <remarks>
-    /// Losing control is done by switching off the behaviours listed in
-    /// <see cref="disableWhileStaggered"/> (an AI brain, a steering script). That keeps this
-    /// component ignorant of any particular enemy type, and it is why knockback is not simply
-    /// steered straight back out by the AI on the next physics step.
-    /// </remarks>
+    /// Losing control is done by switching off the behaviours listed in <see cref="disableWhileStaggered"/>
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Health))]
     public class HitReaction : MonoBehaviour
@@ -107,14 +102,14 @@ namespace Hedgewitch.Combat
             }
         }
 
-        /// <summary>Set the behaviours switched off while staggered, e.g. when spawning an enemy from code.</summary>
+        /// <summary>Set the behaviours switched off while staggered</summary>
         public void SetStaggerBehaviours(params Behaviour[] behaviours)
         {
             EndStagger();
             disableWhileStaggered = behaviours ?? new Behaviour[0];
         }
 
-        /// <summary>Apply the movement part of a hit directly, without dealing damage.</summary>
+        /// <summary>Apply the movement part of a hit directly</summary>
         public void ApplyImpact(in DamageInfo info)
         {
             Shove(info);
@@ -173,8 +168,7 @@ namespace Hedgewitch.Combat
 
             if (info.Knockback > 0f && direction.sqrMagnitude > 0f)
             {
-                // Replace the horizontal velocity rather than adding to it, so every hit of the
-                // same kind moves the target the same distance however it was already moving.
+                // Replace the horizontal velocity rather than adding to it
                 Vector3 planar = direction * (info.Knockback * take);
                 velocity.x = planar.x;
                 velocity.z = planar.z;
