@@ -28,6 +28,9 @@ namespace Hedgewitch.Vacuum.Demo
 
         [Min(0f)] [SerializeField] private float turnSpeed = 720f;
 
+        [Tooltip("Turn speed while an action (a swing, a shot) holds the facing. Faster than walking turns, so attacks go where they are aimed.")]
+        [Min(0f)] [SerializeField] private float actionTurnSpeed = 1800f;
+
         [Header("Jump")]
         [SerializeField] private bool allowJump = true;
         [Min(0f)] [SerializeField] private float jumpSpeed = 5.5f;
@@ -52,9 +55,54 @@ namespace Hedgewitch.Vacuum.Demo
         private float lastGroundedTime;
         private bool grounded;
 
+        private Vector3 heldFacing;
+        private float heldFacingTimer;
+        private float heldMoveScale = 1f;
+        private float heldMoveScaleTimer;
+        private Vector3 lungeVelocity;
+        private float lungeTimer;
+
         public bool IsGrounded => grounded;
 
         public bool IsVacuuming => vacuum != null && vacuum.IsSucking;
+
+        // Overrides walk and aim facing for a while
+        public void HoldFacing(Vector3 direction, float seconds)
+        {
+            direction.y = 0f;
+            if (direction.sqrMagnitude < 1e-4f || seconds <= 0f)
+            {
+                return;
+            }
+
+            heldFacing = direction.normalized;
+            heldFacingTimer = Mathf.Max(heldFacingTimer, seconds);
+        }
+
+        // Latest request wins
+        public void HoldMoveScale(float scale, float seconds)
+        {
+            if (seconds <= 0f)
+            {
+                return;
+            }
+
+            heldMoveScale = Mathf.Clamp01(scale);
+            heldMoveScaleTimer = seconds;
+        }
+
+        // Extra velocity on top of walking for swings or recoil
+        public void Lunge(Vector3 velocity, float seconds)
+        {
+            velocity.y = 0f;
+            if (seconds <= 0f)
+            {
+                return;
+            }
+
+            lungeVelocity = velocity;
+            lungeTimer = seconds;
+        }
 
         private void Awake()
         {
@@ -131,12 +179,25 @@ namespace Hedgewitch.Vacuum.Demo
             FaceDirection(deltaTime);
             HandleJump();
             ApplyFallBoost();
+
+            heldFacingTimer = Mathf.Max(0f, heldFacingTimer - deltaTime);
+            heldMoveScaleTimer = Mathf.Max(0f, heldMoveScaleTimer - deltaTime);
+            lungeTimer = Mathf.Max(0f, lungeTimer - deltaTime);
         }
 
         private void MoveBody(float deltaTime)
         {
             float speed = moveSpeed * (IsVacuuming ? vacuumingSpeedScale : 1f);
+            if (heldMoveScaleTimer > 0f)
+            {
+                speed *= heldMoveScale;
+            }
+
             Vector3 desired = planarInput * speed;
+            if (lungeTimer > 0f)
+            {
+                desired += lungeVelocity;
+            }
 
             Vector3 velocity = body.linearVelocity;
             Vector3 planar = new Vector3(velocity.x, 0f, velocity.z);
@@ -157,8 +218,14 @@ namespace Hedgewitch.Vacuum.Demo
         private void FaceDirection(float deltaTime)
         {
             Vector3 facing;
+            float rate = turnSpeed;
 
-            if (IsVacuuming && aim != null && aim.HasAim)
+            if (heldFacingTimer > 0f)
+            {
+                facing = heldFacing;
+                rate = Mathf.Max(turnSpeed, actionTurnSpeed);
+            }
+            else if (IsVacuuming && aim != null && aim.HasAim)
             {
                 facing = aim.AimDirection;
             }
@@ -174,7 +241,7 @@ namespace Hedgewitch.Vacuum.Demo
             }
 
             Quaternion desired = Quaternion.LookRotation(facing.normalized, Vector3.up);
-            body.MoveRotation(Quaternion.RotateTowards(transform.rotation, desired, turnSpeed * deltaTime));
+            body.MoveRotation(Quaternion.RotateTowards(transform.rotation, desired, rate * deltaTime));
         }
 
         private void HandleJump()
