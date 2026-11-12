@@ -4,10 +4,6 @@ using UnityEngine;
 
 namespace Hedgewitch.Combat
 {
-    /// <summary>
-    /// Hit points for anything that can be fought. Reaching zero is "defeated" rather than
-    /// "killed": in this game a spirit is tidied up and sent on, not destroyed.
-    /// </summary>
     [DisallowMultipleComponent]
     public class Health : MonoBehaviour, IDamageable
     {
@@ -36,7 +32,7 @@ namespace Hedgewitch.Combat
         private bool defeated;
         private float defeatTimer = -1f;
 
-        /// <summary>Every enabled Health, for HUDs and AI. Cheaper than searching the scene.</summary>
+        /// <summary>Every enabled Health, for HUDs and AI</summary>
         public static IReadOnlyList<Health> Active => ActiveList;
 
         public Transform Transform => this != null ? transform : null;
@@ -136,7 +132,7 @@ namespace Hedgewitch.Combat
             current = Mathf.Min(maxHealth, current + amount);
         }
 
-        /// <summary>Back to full and fighting fit, e.g. when an enemy is reused from a pool.</summary>
+        /// <summary>Back to full health, e.g. when an enemy is reused from a pool.</summary>
         public void ResetHealth()
         {
             current = maxHealth;
