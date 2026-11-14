@@ -1,0 +1,695 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4761259722169354116
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7309590759104278062}
+  - component: {fileID: 1192006822005442001}
+  m_Layer: 0
+  m_Name: Vacuum
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7309590759104278062
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4761259722169354116}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3165931875654842307}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1192006822005442001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4761259722169354116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ec4ba75c0f34f0498490aa236cc7934, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Hedgewitch.Combat::Hedgewitch.Combat.VacuumWeapon
+  displayName: Vacuum
+  visuals:
+  - {fileID: 7935453104593387467}
+  controller: {fileID: 8954668880705392615}
+--- !u!1 &6514952137255486513
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7569970827867848894}
+  - component: {fileID: 6866909657274861223}
+  - component: {fileID: 7789209447500615284}
+  - component: {fileID: 673775068645253416}
+  - component: {fileID: 4830917291112295445}
+  - component: {fileID: 1171361571190318117}
+  - component: {fileID: 551124072370029129}
+  - component: {fileID: 2021177074526802175}
+  - component: {fileID: 1998345226592407377}
+  - component: {fileID: 2348653197638461927}
+  m_Layer: 0
+  m_Name: Player
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7569970827867848894
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6514952137255486513}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.1, z: -6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 13742818991796210}
+  - {fileID: 3165931875654842307}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &6866909657274861223
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6514952137255486513}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!136 &7789209447500615284
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6514952137255486513}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &673775068645253416
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6514952137255486513}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: f76063ab7f277004bb1b5da7d9edf80f, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!54 &4830917291112295445
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6514952137255486513}
+  serializedVersion: 5
+  m_Mass: 70
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 112
+  m_CollisionDetection: 2
+--- !u!114 &1171361571190318117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6514952137255486513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0878173ef783a14fbe56d3532b0266e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.Demo.PlayerInputReader
+  moveAction:
+    m_Name: Move
+    m_Type: 0
+    m_ExpectedControlType: Vector2
+    m_Id: 77f1b3b5-7e9f-4315-8514-7021723f7ac0
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+    m_Priority: 0
+  aimAction:
+    m_Name: Aim
+    m_Type: 0
+    m_ExpectedControlType: Vector2
+    m_Id: ca15ca31-f59f-41c9-adad-8f47174194f8
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+    m_Priority: 0
+  pointerAction:
+    m_Name: Pointer
+    m_Type: 0
+    m_ExpectedControlType: Vector2
+    m_Id: 856303bd-44f2-4ca5-8e1c-b4f1ee854042
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+    m_Priority: 0
+  suckAction:
+    m_Name: Suck
+    m_Type: 1
+    m_ExpectedControlType: 
+    m_Id: 65b1d432-fb58-4531-8ba1-183372412f15
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+    m_Priority: 0
+  secondaryAction:
+    m_Name: Secondary
+    m_Type: 1
+    m_ExpectedControlType: 
+    m_Id: 745e5e29-f453-4a96-996c-29518f345797
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+    m_Priority: 0
+  weaponSlot1Action:
+    m_Name: WeaponSlot1
+    m_Type: 1
+    m_ExpectedControlType: 
+    m_Id: c001dbc8-1e3c-4956-913a-edf8762c415a
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+    m_Priority: 0
+  weaponSlot2Action:
+    m_Name: WeaponSlot2
+    m_Type: 1
+    m_ExpectedControlType: 
+    m_Id: ce9176ee-7013-4e38-a2ca-46505492e082
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+    m_Priority: 0
+  weaponSlot3Action:
+    m_Name: WeaponSlot3
+    m_Type: 1
+    m_ExpectedControlType: 
+    m_Id: 0dd9bacd-fb40-46b5-940c-885a0009c183
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+    m_Priority: 0
+  nextWeaponAction:
+    m_Name: NextWeapon
+    m_Type: 1
+    m_ExpectedControlType: 
+    m_Id: 61124124-9bee-498d-b00e-07586d9b8faf
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+    m_Priority: 0
+  previousWeaponAction:
+    m_Name: PreviousWeapon
+    m_Type: 1
+    m_ExpectedControlType: 
+    m_Id: d845c286-a1de-4990-ad81-8e177d014f4b
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+    m_Priority: 0
+  jumpAction:
+    m_Name: Jump
+    m_Type: 1
+    m_ExpectedControlType: 
+    m_Id: 04ac7aa8-87a2-4680-87a5-415d4f550374
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+    m_Priority: 0
+  cameraRotateAction:
+    m_Name: CameraRotate
+    m_Type: 0
+    m_ExpectedControlType: Axis
+    m_Id: 9b2ce65a-c3de-40e8-ac68-e7d169b35535
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+    m_Priority: 0
+  cameraZoomAction:
+    m_Name: CameraZoom
+    m_Type: 0
+    m_ExpectedControlType: Axis
+    m_Id: 5a481570-fa58-4e30-ab55-ff6fadaada38
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+    m_Priority: 0
+  stickAimDeadzone: 0.25
+--- !u!114 &551124072370029129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6514952137255486513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17099d67b8ac7894fa6d5cd75d3863fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.Demo.IsometricPlayerController
+  input: {fileID: 1171361571190318117}
+  cameraRig: {fileID: 0}
+  vacuum: {fileID: 8954668880705392615}
+  aim: {fileID: 4753090823265049736}
+  moveSpeed: 5
+  acceleration: 35
+  deceleration: 45
+  vacuumingSpeedScale: 0.45
+  turnSpeed: 720
+  actionTurnSpeed: 1800
+  allowJump: 1
+  jumpSpeed: 5.5
+  fallGravityBoost: 18
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 8
+  groundCheckDistance: 0.18
+  coyoteTime: 0.12
+--- !u!114 &2021177074526802175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6514952137255486513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e9e612caa1f3ae4c945042fe99e7438, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.VacuumCollection
+  entries: []
+  totalValue: 0
+  totalCount: 0
+--- !u!114 &1998345226592407377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6514952137255486513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aa14f4735145384aa1d58dea3f6554f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Hedgewitch.Combat::Hedgewitch.Combat.WeaponInventory
+  weapons:
+  - {fileID: 2445730250823739658}
+  - {fileID: 3876874191990688526}
+  - {fileID: 1192006822005442001}
+  startingSlot: 0
+  inputSource: {fileID: 0}
+  aimSource: {fileID: 0}
+  motorSource: {fileID: 0}
+--- !u!114 &2348653197638461927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6514952137255486513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de610defdda04a4ca391b2f696d5b77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Hedgewitch.Combat::Hedgewitch.Combat.Demo.DemoPlayerCombatBridge
+  input: {fileID: 0}
+  aim: {fileID: 0}
+  controller: {fileID: 0}
+--- !u!1 &7015670016033886915
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3165931875654842307}
+  m_Layer: 0
+  m_Name: Weapons
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3165931875654842307
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7015670016033886915}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2395272676809624212}
+  - {fileID: 561047410382697982}
+  - {fileID: 7309590759104278062}
+  m_Father: {fileID: 7569970827867848894}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &2239263473906940964
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3165931875654842307}
+    m_Modifications:
+    - target: {fileID: 1790827254636972506, guid: 4e9078bb5d2333d408404aa1b9d9d8a8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1790827254636972506, guid: 4e9078bb5d2333d408404aa1b9d9d8a8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1790827254636972506, guid: 4e9078bb5d2333d408404aa1b9d9d8a8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1790827254636972506, guid: 4e9078bb5d2333d408404aa1b9d9d8a8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1790827254636972506, guid: 4e9078bb5d2333d408404aa1b9d9d8a8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1790827254636972506, guid: 4e9078bb5d2333d408404aa1b9d9d8a8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1790827254636972506, guid: 4e9078bb5d2333d408404aa1b9d9d8a8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1790827254636972506, guid: 4e9078bb5d2333d408404aa1b9d9d8a8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1790827254636972506, guid: 4e9078bb5d2333d408404aa1b9d9d8a8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1790827254636972506, guid: 4e9078bb5d2333d408404aa1b9d9d8a8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2291606310649409149, guid: 4e9078bb5d2333d408404aa1b9d9d8a8, type: 3}
+      propertyPath: m_Name
+      value: Musket
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4e9078bb5d2333d408404aa1b9d9d8a8, type: 3}
+--- !u!4 &561047410382697982 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1790827254636972506, guid: 4e9078bb5d2333d408404aa1b9d9d8a8, type: 3}
+  m_PrefabInstance: {fileID: 2239263473906940964}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3876874191990688526 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3088935851670304554, guid: 4e9078bb5d2333d408404aa1b9d9d8a8, type: 3}
+  m_PrefabInstance: {fileID: 2239263473906940964}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bf44a2355a664344a7a7d2549de4c60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Hedgewitch.Combat::Hedgewitch.Combat.MusketWeapon
+--- !u!1001 &7902423773678454884
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3165931875654842307}
+    m_Modifications:
+    - target: {fileID: 5518804288615940848, guid: 3aa5ed36d289c4e4583ba3c78476aee8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5518804288615940848, guid: 3aa5ed36d289c4e4583ba3c78476aee8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5518804288615940848, guid: 3aa5ed36d289c4e4583ba3c78476aee8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5518804288615940848, guid: 3aa5ed36d289c4e4583ba3c78476aee8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5518804288615940848, guid: 3aa5ed36d289c4e4583ba3c78476aee8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5518804288615940848, guid: 3aa5ed36d289c4e4583ba3c78476aee8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5518804288615940848, guid: 3aa5ed36d289c4e4583ba3c78476aee8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5518804288615940848, guid: 3aa5ed36d289c4e4583ba3c78476aee8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5518804288615940848, guid: 3aa5ed36d289c4e4583ba3c78476aee8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5518804288615940848, guid: 3aa5ed36d289c4e4583ba3c78476aee8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7634235973784552849, guid: 3aa5ed36d289c4e4583ba3c78476aee8, type: 3}
+      propertyPath: m_Name
+      value: Broom
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3aa5ed36d289c4e4583ba3c78476aee8, type: 3}
+--- !u!4 &2395272676809624212 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5518804288615940848, guid: 3aa5ed36d289c4e4583ba3c78476aee8, type: 3}
+  m_PrefabInstance: {fileID: 7902423773678454884}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2445730250823739658 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5502262095081791854, guid: 3aa5ed36d289c4e4583ba3c78476aee8, type: 3}
+  m_PrefabInstance: {fileID: 7902423773678454884}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf7eeea52c2cd784d8a27032b6ca47e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Hedgewitch.Combat::Hedgewitch.Combat.BroomWeapon
+--- !u!1001 &8752777511109693402
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7569970827867848894}
+    m_Modifications:
+    - target: {fileID: 191695701992170435, guid: a2d4f4317b22c4248a1206c8572f7330, type: 3}
+      propertyPath: m_Name
+      value: Vacuum Rig
+      objectReference: {fileID: 0}
+    - target: {fileID: 377531759627599933, guid: a2d4f4317b22c4248a1206c8572f7330, type: 3}
+      propertyPath: collection
+      value: 
+      objectReference: {fileID: 2021177074526802175}
+    - target: {fileID: 8739463503935397928, guid: a2d4f4317b22c4248a1206c8572f7330, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8739463503935397928, guid: a2d4f4317b22c4248a1206c8572f7330, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 8739463503935397928, guid: a2d4f4317b22c4248a1206c8572f7330, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8739463503935397928, guid: a2d4f4317b22c4248a1206c8572f7330, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8739463503935397928, guid: a2d4f4317b22c4248a1206c8572f7330, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8739463503935397928, guid: a2d4f4317b22c4248a1206c8572f7330, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8739463503935397928, guid: a2d4f4317b22c4248a1206c8572f7330, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8739463503935397928, guid: a2d4f4317b22c4248a1206c8572f7330, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8739463503935397928, guid: a2d4f4317b22c4248a1206c8572f7330, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8739463503935397928, guid: a2d4f4317b22c4248a1206c8572f7330, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a2d4f4317b22c4248a1206c8572f7330, type: 3}
+--- !u!4 &13742818991796210 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8739463503935397928, guid: a2d4f4317b22c4248a1206c8572f7330, type: 3}
+  m_PrefabInstance: {fileID: 8752777511109693402}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4753090823265049736 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4075267478460650322, guid: a2d4f4317b22c4248a1206c8572f7330, type: 3}
+  m_PrefabInstance: {fileID: 8752777511109693402}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6471e71ea5550524281975672f6a6338, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.Demo.VacuumAimController
+--- !u!1 &7935453104593387467 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1682226727238479889, guid: a2d4f4317b22c4248a1206c8572f7330, type: 3}
+  m_PrefabInstance: {fileID: 8752777511109693402}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8954668880705392615 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 377531759627599933, guid: a2d4f4317b22c4248a1206c8572f7330, type: 3}
+  m_PrefabInstance: {fileID: 8752777511109693402}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8630a7b702e25be4faf4d7e0f9a4cada, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.VacuumController
