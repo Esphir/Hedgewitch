@@ -8684,7 +8684,7 @@ MonoBehaviour:
   acceleration: 14
   struggleSteerEffort: 0.4
   turnSpeed: 540
-  target: {fileID: 0}
+  target: {fileID: 964002126}
   aggroRange: 9
   loseInterestRange: 14
   sightBlockers:

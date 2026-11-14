@@ -1,12 +1,10 @@
+// Damage data passed from weapons to whatever they hit
 using System;
 using UnityEngine;
 
 namespace Hedgewitch.Combat
 {
-    /// <summary>
-    /// What kind of hit this was. Charms and other modifiers key off these ("melee hits",
-    /// "finishers"), so every hit should carry the tags that describe it.
-    /// </summary>
+    // Hit tags that charms and modifiers filter on
     [Flags]
     public enum DamageTags
     {
@@ -18,38 +16,34 @@ namespace Hedgewitch.Combat
         Finisher = 1 << 4
     }
 
-    /// <summary>One hit, fully described: how much it hurts and how it moves the target.</summary>
     public struct DamageInfo
     {
         public float Amount;
 
-        /// <summary>World position of the hit.</summary>
         public Vector3 Point;
 
-        /// <summary>Direction the hit travels in. Knockback is applied along its horizontal part.</summary>
+        // Knockback uses the horizontal part
         public Vector3 Direction;
 
-        /// <summary>Horizontal speed given to the target, in m/s.</summary>
+        // Horizontal knockback speed in m/s
         public float Knockback;
 
-        /// <summary>Upward speed given to the target, in m/s. Above zero, the hit knocks it up.</summary>
+        // Upward speed in m/s and above zero knocks up
         public float Launch;
 
-        /// <summary>Seconds the target loses control of itself.</summary>
+        // Seconds the target loses control
         public float Stagger;
 
         public DamageTags Tags;
 
-        /// <summary>Whoever is ultimately responsible: usually the player's root object.</summary>
+        // Usually the player root
         public GameObject Source;
 
-        /// <summary>The weapon that landed the hit, if any.</summary>
         public UnityEngine.Object Weapon;
 
         public bool HasTag(DamageTags tag) => (Tags & tag) != 0;
     }
 
-    /// <summary>What a damage call actually did.</summary>
     public struct DamageResult
     {
         public bool Applied;

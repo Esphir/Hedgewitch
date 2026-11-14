@@ -1,8 +1,8 @@
+// Anything a weapon can hurt
 using UnityEngine;
 
 namespace Hedgewitch.Combat
 {
-    /// <summary>Anything a weapon can hurt.</summary>
     public interface IDamageable
     {
         Transform Transform { get; }

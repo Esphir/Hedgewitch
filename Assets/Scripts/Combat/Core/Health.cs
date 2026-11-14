@@ -1,3 +1,4 @@
+// Hit points where zero means defeated and sent on rather than killed
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,7 +33,7 @@ namespace Hedgewitch.Combat
         private bool defeated;
         private float defeatTimer = -1f;
 
-        /// <summary>Every enabled Health, for HUDs and AI</summary>
+        // Every enabled Health for HUDs and AI
         public static IReadOnlyList<Health> Active => ActiveList;
 
         public Transform Transform => this != null ? transform : null;
@@ -132,7 +133,6 @@ namespace Hedgewitch.Combat
             current = Mathf.Min(maxHealth, current + amount);
         }
 
-        /// <summary>Back to full health, e.g. when an enemy is reused from a pool.</summary>
         public void ResetHealth()
         {
             current = maxHealth;

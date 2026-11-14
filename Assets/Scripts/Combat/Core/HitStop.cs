@@ -1,10 +1,11 @@
+// Brief near freeze of time when a heavy blow lands
 using UnityEngine;
 
 namespace Hedgewitch.Combat
 {
     public sealed class HitStop : MonoBehaviour
     {
-        /// Global switch, so tests and tools can turn the effect off.
+        // Lets tests and tools turn it off
         public static bool Enabled = true;
 
         private const float FrozenScale = 0.05f;
@@ -52,7 +53,7 @@ namespace Hedgewitch.Combat
                 return;
             }
 
-            // Real time
+            // Real time because game time is frozen
             remaining -= Time.unscaledDeltaTime;
             if (remaining <= 0f)
             {
