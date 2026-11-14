@@ -1,0 +1,23 @@
+{
+    "name": "Hedgewitch.Combat.Tests",
+    "rootNamespace": "Hedgewitch.Combat.Tests",
+    "references": [
+        "Hedgewitch.Combat",
+        "Hedgewitch.Vacuum",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
