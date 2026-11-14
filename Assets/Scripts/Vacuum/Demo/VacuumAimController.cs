@@ -30,6 +30,15 @@ namespace Hedgewitch.Vacuum.Demo
         [Tooltip("Keep aiming the nozzle even when the trigger is not held.")]
         [SerializeField] private bool aimWhileIdle = true;
 
+        [Tooltip("Turn suction on and off from the primary button. Switch off when something else, such as a weapon inventory, decides when the vacuum runs.")]
+        [SerializeField] private bool driveSuctionFromInput = true;
+
+        public bool DriveSuctionFromInput
+        {
+            get => driveSuctionFromInput;
+            set => driveSuctionFromInput = value;
+        }
+
         public Vector3 AimPoint { get; private set; }
 
         public Vector3 AimDirection { get; private set; } = Vector3.forward;
@@ -72,8 +81,11 @@ namespace Hedgewitch.Vacuum.Demo
                 return;
             }
 
-            bool suckHeld = input.SuckHeld;
-            vacuum.SetSuction(suckHeld);
+            bool suckHeld = driveSuctionFromInput ? input.SuckHeld : vacuum.IsSucking;
+            if (driveSuctionFromInput)
+            {
+                vacuum.SetSuction(suckHeld);
+            }
 
             if (!suckHeld && !aimWhileIdle)
             {
