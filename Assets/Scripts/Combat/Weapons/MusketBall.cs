@@ -23,6 +23,15 @@ namespace Hedgewitch.Combat
 
         public Vector3 Velocity => velocity;
 
+        public Vector3 LaunchPosition { get; private set; }
+
+        public Vector3 SweepStart => firstSweepStart;
+
+        public float Range { get; private set; }
+
+        // Where the ball stopped and the collider it hit or null when it ran out of range
+        public event Action<MusketBall, Vector3, Collider> Landed;
+
         // Sweep starts on the shooter centre line so point blank enemies are hit
         public void Launch(
             Vector3 position,
@@ -36,8 +45,10 @@ namespace Hedgewitch.Combat
             Action<RaycastHit, Vector3> hitCallback)
         {
             transform.position = position;
+            LaunchPosition = position;
             velocity = direction.normalized * Mathf.Max(0.1f, speed);
             remainingRange = Mathf.Max(0.1f, range);
+            Range = remainingRange;
             radius = Mathf.Max(0.001f, ballRadius);
             hitMask = mask;
             ignoreRoot = ignore;
@@ -109,6 +120,7 @@ namespace Hedgewitch.Combat
 
                 transform.position = from + direction * hit.distance;
                 onHit?.Invoke(hit, direction);
+                Landed?.Invoke(this, hit.point, hit.collider);
                 Finish();
                 return;
             }
@@ -117,6 +129,7 @@ namespace Hedgewitch.Combat
             remainingRange -= distance;
             if (remainingRange <= 0f)
             {
+                Landed?.Invoke(this, transform.position, null);
                 Finish();
             }
         }

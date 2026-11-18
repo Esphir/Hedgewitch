@@ -22,6 +22,15 @@ namespace Hedgewitch.Combat.Tests
 
         public Vector3 AimPoint => transform.position + AimOffset;
 
+        public Vector3 AimPointAtHeight(float height) => AimPoint;
+
+        public bool TryGetAimSurface(out Vector3 point, out Vector3 normal)
+        {
+            point = AimPoint;
+            normal = Vector3.up;
+            return false;
+        }
+
         public void PressPrimary() => primaryQueued = true;
 
         public void PressSecondary() => secondaryQueued = true;

@@ -176,13 +176,13 @@ namespace Hedgewitch.Combat
             Defeated?.Invoke(this, target, info);
         }
 
-        // Falls back to the owner facing
+        // Aims at the cursor at the height of from and falls back to the owner facing
         protected Vector3 FlatAimDirection(Vector3 from)
         {
             ICombatAim aim = Aim;
             if (aim != null && aim.HasAim)
             {
-                Vector3 toAim = aim.AimPoint - from;
+                Vector3 toAim = aim.AimPointAtHeight(from.y) - from;
                 toAim.y = 0f;
                 if (toAim.sqrMagnitude > 0.01f)
                 {

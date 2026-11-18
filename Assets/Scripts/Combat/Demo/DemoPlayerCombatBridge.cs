@@ -15,6 +15,20 @@ namespace Hedgewitch.Combat.Demo
 
         public Vector3 AimPoint => aim != null ? aim.AimPoint : transform.position + transform.forward;
 
+        public Vector3 AimPointAtHeight(float height) => aim != null ? aim.AimPointAtHeight(height) : AimPoint;
+
+        public bool TryGetAimSurface(out Vector3 point, out Vector3 normal)
+        {
+            if (aim != null)
+            {
+                return aim.TryGetAimSurface(out point, out normal);
+            }
+
+            point = AimPoint;
+            normal = Vector3.up;
+            return false;
+        }
+
         private void Awake()
         {
             if (input == null)

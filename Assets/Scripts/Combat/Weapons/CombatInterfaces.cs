@@ -30,6 +30,12 @@ namespace Hedgewitch.Combat
         bool HasAim { get; }
 
         Vector3 AimPoint { get; }
+
+        // Where the aim crosses this height so flat attacks match the cursor at any camera angle
+        Vector3 AimPointAtHeight(float height);
+
+        // The surface under the cursor so shots can reach things above or below muzzle height
+        bool TryGetAimSurface(out Vector3 point, out Vector3 normal);
     }
 
     // Weapon requests that each expire on their own

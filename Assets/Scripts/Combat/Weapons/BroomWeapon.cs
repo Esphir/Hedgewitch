@@ -280,7 +280,7 @@ namespace Hedgewitch.Combat
             SetTrail(false);
 
             speed = Stats.AttackSpeedMultiplier;
-            attackDirection = FlatAimDirection(OwnerRoot.position);
+            attackDirection = FlatAimDirection(OwnerRoot.position + Vector3.up * hitCentreHeight);
             windupStartRotation = swingPivot != null ? swingPivot.localRotation : Quaternion.identity;
 
             float duration = step.TotalDuration / speed;

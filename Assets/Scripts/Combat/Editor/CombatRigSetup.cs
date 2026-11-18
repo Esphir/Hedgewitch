@@ -128,6 +128,13 @@ namespace Hedgewitch.Combat.EditorTools
                 log.Add($"added CombatDebugHud to '{host.name}'");
             }
 
+            CombatDebugHud combatHud = Object.FindAnyObjectByType<CombatDebugHud>();
+            if (combatHud != null && Object.FindAnyObjectByType<MusketHitTracer>() == null)
+            {
+                combatHud.gameObject.AddComponent<MusketHitTracer>();
+                log.Add($"added MusketHitTracer to '{combatHud.name}'");
+            }
+
             bool changed = log.Count > 0;
             report = "[Combat] setup:" + (changed ? "\n  " + string.Join("\n  ", log) : "\n  already up to date");
             return changed;

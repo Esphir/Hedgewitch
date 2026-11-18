@@ -47,6 +47,14 @@ namespace Hedgewitch.Vacuum.Demo
 
         private readonly RaycastHit[] aimHits = new RaycastHit[16];
 
+        // Last aim ray and the distance to the first surface under the cursor
+        private Ray aimRay;
+        private float aimSurfaceDistance = float.PositiveInfinity;
+        private Vector3 aimSurfacePoint;
+        private Vector3 aimSurfaceNormal = Vector3.up;
+        private bool stickAiming;
+        private Vector3 stickPlanarDirection = Vector3.forward;
+
         private void Awake()
         {
             if (vacuum == null)
@@ -112,6 +120,38 @@ namespace Hedgewitch.Vacuum.Demo
             }
         }
 
+        // Where the cursor crosses this height or the first surface it hits above it
+        // Use this for flat shots since the floor point drifts along the camera view
+        public Vector3 AimPointAtHeight(float height)
+        {
+            if (!HasAim)
+            {
+                return AimPoint;
+            }
+
+            if (stickAiming)
+            {
+                Vector3 start = new Vector3(transform.position.x, height, transform.position.z);
+                return start + stickPlanarDirection * maxAimDistance;
+            }
+
+            Plane plane = new Plane(Vector3.up, new Vector3(0f, height, 0f));
+            if (!plane.Raycast(aimRay, out float enter))
+            {
+                return AimPoint;
+            }
+
+            return aimRay.GetPoint(Mathf.Min(enter, aimSurfaceDistance));
+        }
+
+        // The surface under the cursor and false for stick aim or open sky
+        public bool TryGetAimSurface(out Vector3 point, out Vector3 normal)
+        {
+            point = aimSurfacePoint;
+            normal = aimSurfaceNormal;
+            return HasAim && !stickAiming && !float.IsPositiveInfinity(aimSurfaceDistance);
+        }
+
         private bool ResolveAimPoint(out Vector3 point)
         {
             point = Vector3.zero;
@@ -119,7 +159,8 @@ namespace Hedgewitch.Vacuum.Demo
             VacuumNozzle nozzle = vacuum.Nozzle;
             Vector3 origin = nozzle != null ? nozzle.Origin : transform.position;
 
-            if (!input.UsingPointer && input.AimStick.sqrMagnitude > 0.04f)
+            stickAiming = !input.UsingPointer && input.AimStick.sqrMagnitude > 0.04f;
+            if (stickAiming)
             {
                 point = ResolveStickAim(origin);
                 return true;
@@ -135,11 +176,16 @@ namespace Hedgewitch.Vacuum.Demo
             }
 
             Ray ray = aimCamera.ScreenPointToRay(input.PointerPosition);
+            aimRay = ray;
+            aimSurfaceDistance = float.PositiveInfinity;
 
             // Prefer a real surface under the cursor, so aiming at a wall or a prop points the
             // nozzle at it rather than past it.
-            if (TryRaycastPastSelf(ray, out Vector3 surfacePoint))
+            if (TryRaycastPastSelf(ray, out Vector3 surfacePoint, out float surfaceDistance, out Vector3 surfaceNormal))
             {
+                aimSurfaceDistance = surfaceDistance;
+                aimSurfacePoint = surfacePoint;
+                aimSurfaceNormal = surfaceNormal;
                 point = surfacePoint;
                 return true;
             }
@@ -156,15 +202,16 @@ namespace Hedgewitch.Vacuum.Demo
             return true;
         }
 
-        private bool TryRaycastPastSelf(Ray ray, out Vector3 point)
+        private bool TryRaycastPastSelf(Ray ray, out Vector3 point, out float nearest, out Vector3 normal)
         {
             point = Vector3.zero;
+            normal = Vector3.up;
+            nearest = float.MaxValue;
             Transform self = transform.root;
 
             int count = Physics.RaycastNonAlloc(
                 ray, aimHits, maxAimDistance, aimLayers, QueryTriggerInteraction.Ignore);
 
-            float nearest = float.MaxValue;
             bool found = false;
 
             for (int i = 0; i < count; i++)
@@ -179,6 +226,7 @@ namespace Hedgewitch.Vacuum.Demo
                 {
                     nearest = hit.distance;
                     point = hit.point;
+                    normal = hit.normal;
                     found = true;
                 }
             }
@@ -194,6 +242,7 @@ namespace Hedgewitch.Vacuum.Demo
             Vector3 right = cameraRig != null ? cameraRig.PlanarRight : Vector3.right;
 
             Vector3 direction = (forward * stick.y + right * stick.x).normalized;
+            stickPlanarDirection = direction;
             direction = Quaternion.AngleAxis(stickAimPitch, Vector3.Cross(Vector3.up, direction)) * direction;
 
             return origin + direction * stickAimDistance;

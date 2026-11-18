@@ -2509,6 +2509,7 @@ GameObject:
   - component: {fileID: 811916065}
   - component: {fileID: 811916067}
   - component: {fileID: 811916068}
+  - component: {fileID: 811916069}
   m_Layer: 0
   m_Name: Vacuum Debug HUD
   m_TagString: Untagged
@@ -2528,7 +2529,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 235b4c068db2aaa47b59a87445904250, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.Demo.VacuumDebugHud
-  vacuum: {fileID: 0}
+  vacuum: {fileID: 1295288533}
   showControls: 0
   fontSize: 13
 --- !u!4 &811916066
@@ -2558,7 +2559,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a6826d1cc2c45949a0c94c6ee6c15d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.Demo.VacuumTuningPanel
-  vacuum: {fileID: 0}
+  vacuum: {fileID: 1295288533}
   visible: 1
   panelWidth: 330
 --- !u!114 &811916068
@@ -2573,13 +2574,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0adda3d7a31c687478dda3d2e50ba6e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Hedgewitch.Combat::Hedgewitch.Combat.Demo.CombatDebugHud
-  inventory: {fileID: 0}
-  worldCamera: {fileID: 0}
+  inventory: {fileID: 964002129}
+  worldCamera: {fileID: 1865626667}
   showControls: 1
   showHealthBars: 1
   panelPosition: {x: 12, y: 284}
   fontSize: 13
   healthBarHeight: 1.4
+--- !u!114 &811916069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 811916064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d2f28b6e4e56004d8079cfc86430e35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Hedgewitch.Combat::Hedgewitch.Combat.Demo.MusketHitTracer
+  lifetime: 4
+  maxTraces: 8
+  showLabels: 1
+  showLegend: 1
+  pathColor: {r: 1, g: 0.85, b: 0.2, a: 1}
+  aimColor: {r: 0.3, g: 0.85, b: 1, a: 0.9}
+  damageColor: {r: 0.35, g: 1, b: 0.35, a: 1}
+  blockedColor: {r: 1, g: 0.55, b: 0.15, a: 1}
+  missColor: {r: 1, g: 0.25, b: 0.25, a: 1}
+  worldCamera: {fileID: 1865626667}
 --- !u!1 &813933444
 GameObject:
   m_ObjectHideFlags: 0
@@ -3069,6 +3092,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7569970827867848894, guid: 6fe732be3e04ac64fb0dc09c9fb2e8c4, type: 3}
   m_PrefabInstance: {fileID: 7660574584446150707}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &964002129 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1998345226592407377, guid: 6fe732be3e04ac64fb0dc09c9fb2e8c4, type: 3}
+  m_PrefabInstance: {fileID: 7660574584446150707}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aa14f4735145384aa1d58dea3f6554f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Hedgewitch.Combat::Hedgewitch.Combat.WeaponInventory
 --- !u!1 &1049823680
 GameObject:
   m_ObjectHideFlags: 0
@@ -4140,6 +4174,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1251046309}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1295288533 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8954668880705392615, guid: 6fe732be3e04ac64fb0dc09c9fb2e8c4, type: 3}
+  m_PrefabInstance: {fileID: 7660574584446150707}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8630a7b702e25be4faf4d7e0f9a4cada, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.VacuumController
 --- !u!1 &1344271802
 GameObject:
   m_ObjectHideFlags: 0

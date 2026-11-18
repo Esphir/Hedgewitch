@@ -21,6 +21,12 @@ namespace Hedgewitch.Combat
 
         [Min(0.001f)] [SerializeField] private float projectileRadius = 0.12f;
 
+        [Tooltip("Upward facing surfaces this close to the witch's feet count as floor, so aiming at them fires a level shot.")]
+        [Min(0f)] [SerializeField] private float floorTolerance = 0.25f;
+
+        [Tooltip("Steepest the shot tilts up or down to reach what is under the cursor, in degrees.")]
+        [Range(0f, 80f)] [SerializeField] private float maxShotPitch = 45f;
+
         [Tooltip("Degrees between balls when more than one is fired per shot.")]
         [Range(0f, 30f)] [SerializeField] private float extraShotSpread = 5f;
 
@@ -108,7 +114,14 @@ namespace Hedgewitch.Combat
             set => projectileSpeed = Mathf.Max(1f, value);
         }
 
+        // Where the cursor crossed muzzle height on the last shot
+        public Vector3 LastAimTarget { get; private set; }
+
+        // The surface point under the cursor on the last shot
+        public Vector3 LastCursorPoint { get; private set; }
+
         public event Action<MusketWeapon> Fired;
+        public event Action<MusketWeapon, MusketBall> BallLaunched;
         public event Action<MusketWeapon> DryFired;
         public event Action<MusketWeapon> Reloaded;
 
@@ -149,11 +162,11 @@ namespace Hedgewitch.Combat
             float speed = Stats.AttackSpeedMultiplier;
             ignitionTimer = ignitionDelay / speed;
 
-            Vector3 direction = FlatAimDirection(OwnerRoot.position);
+            Vector3 facing = ShotFacing(MuzzlePosition(), out _, out _);
             ICombatMotor motor = Motor;
             if (motor != null)
             {
-                motor.HoldFacing(direction, ignitionTimer + 0.25f);
+                motor.HoldFacing(facing, ignitionTimer + 0.25f);
                 motor.HoldMoveScale(0.5f, ignitionTimer);
             }
 
@@ -226,18 +239,28 @@ namespace Hedgewitch.Combat
             loaded = false;
             reloadProgress = 0f;
 
-            Transform owner = OwnerRoot;
-            Vector3 origin = muzzle != null
-                ? muzzle.position
-                : owner.position + Vector3.up * 0.3f + owner.forward * 0.8f;
+            Vector3 origin = MuzzlePosition();
+            Vector3 sweepStart = SweepStart(origin);
+            Vector3 facing = ShotFacing(origin, out Vector3 target, out bool hasTarget);
+            Vector3 direction = facing;
 
-            // First sweep starts on the witch centre line so close targets are not skipped
-            Vector3 sweepStart = new Vector3(owner.position.x, origin.y, owner.position.z);
-            Vector3 direction = FlatAimDirection(sweepStart);
+            // Fire from where the muzzle really is so the shot crosses the target even mid turn
+            if (hasTarget)
+            {
+                Vector3 fromMuzzle = target - origin;
+                Vector3 flat = new Vector3(fromMuzzle.x, 0f, fromMuzzle.z);
+                if (flat.sqrMagnitude > 0.01f && Vector3.Dot(flat, facing) > 0f)
+                {
+                    direction = ClampPitch(fromMuzzle, maxShotPitch);
+                }
+            }
 
             WeaponStats stats = Stats;
             int shots = 1 + stats.ExtraShots;
             float range = maxRange * stats.RangeMultiplier;
+
+            LastAimTarget = hasTarget ? target : sweepStart + direction * range;
+            LastCursorPoint = hasTarget ? Aim.AimPoint : LastAimTarget;
 
             for (int i = 0; i < shots; i++)
             {
@@ -249,11 +272,11 @@ namespace Hedgewitch.Combat
             ICombatMotor motor = Motor;
             if (motor != null)
             {
-                motor.HoldFacing(direction, 0.25f);
+                motor.HoldFacing(facing, 0.25f);
                 motor.HoldMoveScale(moveScaleAfterShot, slowAfterShotDuration);
                 if (recoilSpeed > 0f)
                 {
-                    motor.Lunge(-direction * recoilSpeed, recoilDuration);
+                    motor.Lunge(-facing * recoilSpeed, recoilDuration);
                 }
             }
 
@@ -263,6 +286,102 @@ namespace Hedgewitch.Combat
 
             RaiseAttacked();
             Fired?.Invoke(this);
+        }
+
+        private Vector3 MuzzlePosition()
+        {
+            Transform owner = OwnerRoot;
+            return muzzle != null
+                ? muzzle.position
+                : owner.position + Vector3.up * 0.3f + owner.forward * 0.8f;
+        }
+
+        // Facing that puts the side mounted barrel line through the shot target
+        private Vector3 ShotFacing(Vector3 muzzlePosition, out Vector3 target, out bool hasTarget)
+        {
+            hasTarget = TryGetShotTarget(muzzlePosition, out target);
+
+            Transform owner = OwnerRoot;
+            if (!hasTarget)
+            {
+                return FlatAimDirection(SweepStart(muzzlePosition));
+            }
+
+            Vector3 toTarget = target - owner.position;
+            toTarget.y = 0f;
+            float distance = toTarget.magnitude;
+            if (distance < 0.01f)
+            {
+                return FlatAimDirection(SweepStart(muzzlePosition));
+            }
+
+            toTarget /= distance;
+
+            // Sideways offset of the muzzle from the witch centre and positive is her right
+            float side = (Quaternion.Inverse(owner.rotation) * (muzzlePosition - owner.position)).x;
+
+            // Too close to line up so face the target and let the point blank sweep do the work
+            if (distance <= Mathf.Abs(side) + 0.05f)
+            {
+                return toTarget;
+            }
+
+            float turn = Mathf.Asin(side / distance) * Mathf.Rad2Deg;
+            return Quaternion.AngleAxis(-turn, Vector3.up) * toTarget;
+        }
+
+        // The isometric camera looks down so the cursor ray meets things at many heights
+        // Anything standing under the cursor is aimed at directly and open floor gives a level shot
+        private bool TryGetShotTarget(Vector3 muzzlePosition, out Vector3 target)
+        {
+            target = Vector3.zero;
+            ICombatAim aim = Aim;
+            if (aim == null || !aim.HasAim)
+            {
+                return false;
+            }
+
+            if (aim.TryGetAimSurface(out Vector3 point, out Vector3 normal) && !IsFloor(point, normal))
+            {
+                target = point;
+                return true;
+            }
+
+            target = aim.AimPointAtHeight(muzzlePosition.y);
+            return true;
+        }
+
+        private bool IsFloor(Vector3 point, Vector3 normal)
+        {
+            return normal.y > 0.7f && point.y <= FeetHeight() + floorTolerance;
+        }
+
+        private float FeetHeight()
+        {
+            Transform owner = OwnerRoot;
+            Collider body = owner.GetComponent<Collider>();
+            return body != null ? body.bounds.min.y : owner.position.y;
+        }
+
+        private static Vector3 ClampPitch(Vector3 direction, float maxPitch)
+        {
+            Vector3 flat = new Vector3(direction.x, 0f, direction.z);
+            float flatLength = flat.magnitude;
+            float pitch = Mathf.Atan2(direction.y, flatLength) * Mathf.Rad2Deg;
+            if (Mathf.Abs(pitch) <= maxPitch)
+            {
+                return direction.normalized;
+            }
+
+            float clamped = Mathf.Sign(pitch) * maxPitch * Mathf.Deg2Rad;
+            return (flat / flatLength * Mathf.Cos(clamped) + Vector3.up * Mathf.Sin(clamped)).normalized;
+        }
+
+        // First sweep starts on the witch centre line so close targets are not skipped
+        private Vector3 SweepStart(Vector3 muzzlePosition)
+        {
+            Vector3 owner = OwnerRoot.position;
+            return new Vector3(owner.x, muzzlePosition.y, owner.z);
         }
 
         private void SpawnBall(Vector3 origin, Vector3 sweepStart, Vector3 direction, float range)
@@ -281,6 +400,8 @@ namespace Hedgewitch.Combat
                 hitLayers,
                 OwnerRoot,
                 HandleBallHit);
+
+            BallLaunched?.Invoke(this, ball);
         }
 
         private void HandleBallHit(RaycastHit hit, Vector3 direction)
