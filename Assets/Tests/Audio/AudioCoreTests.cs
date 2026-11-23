@@ -19,6 +19,7 @@ namespace Hedgewitch.Audio.Tests
         {
             AudioWarnings.Reset();
             host = new GameObject("Test Audio Host");
+            host.AddComponent<AudioListener>();
             spawned.Add(host);
             backend = new UnityAudioBackend(host.transform, 2, 8);
         }

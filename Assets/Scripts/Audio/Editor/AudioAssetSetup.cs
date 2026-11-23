@@ -334,6 +334,14 @@ namespace Hedgewitch.Audio.EditorTools
                     managerData.ApplyModifiedPropertiesWithoutUndo();
                 }
 
+                MusicManager music = GetOrAdd<MusicManager>(contents);
+                SerializedObject musicData = new SerializedObject(music);
+                if (musicData.FindProperty("library").objectReferenceValue == null)
+                {
+                    musicData.FindProperty("library").objectReferenceValue = LoadLibrary<MusicLibrary>("MusicLibrary");
+                    musicData.ApplyModifiedPropertiesWithoutUndo();
+                }
+
                 Transform listener = contents.transform.Find("Listener");
                 if (listener == null)
                 {

@@ -65,6 +65,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6493457445518696298}
   - component: {fileID: 6894200505340618884}
+  - component: {fileID: 6287374799008927902}
   m_Layer: 0
   m_Name: AudioSystem
   m_TagString: Untagged
@@ -103,3 +104,21 @@ MonoBehaviour:
   mixer: {fileID: 24100000, guid: 6b56defc0ab54304c9284b6f3e3d0235, type: 2}
   initialVoices: 16
   maxVoices: 48
+--- !u!114 &6287374799008927902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6973098633943708093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02aaf63206d7c2f4086506b10b7f6ff2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Hedgewitch.Audio::Hedgewitch.Audio.MusicManager
+  library: {fileID: 11400000, guid: fc916c5751fab654e857550d580cd1e3, type: 2}
+  fadeTime: 1.5
+  fightRange: 10
+  leaveFightDelay: 4
+  checkInterval: 0.2
+  syncExploreAndFight: 0

@@ -17,5 +17,14 @@ namespace Hedgewitch.Audio
         public SoundEvent TitleTrack => titleTrack;
         public SoundEvent LevelExplore => levelExplore;
         public SoundEvent LevelFight => levelFight;
+
+#if UNITY_EDITOR
+        public void EditorSetTracks(SoundEvent title, SoundEvent explore, SoundEvent fight)
+        {
+            titleTrack = title;
+            levelExplore = explore;
+            levelFight = fight;
+        }
+#endif
     }
 }
