@@ -12,6 +12,9 @@ namespace Hedgewitch.Audio
         AudioHandle PlayLoop(SoundEvent sound, Transform follow);
 
         void StopAll(float fadeTime);
+
+        // Linear 0 to 1 where a Wwise backend would set an RTPC
+        void SetBusVolume(AudioBus bus, float linear);
     }
 
     // Backends that need a per frame update from AudioManager

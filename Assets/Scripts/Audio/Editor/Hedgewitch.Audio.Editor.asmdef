@@ -1,0 +1,18 @@
+{
+    "name": "Hedgewitch.Audio.Editor",
+    "rootNamespace": "Hedgewitch.Audio.EditorTools",
+    "references": [
+        "Hedgewitch.Audio"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

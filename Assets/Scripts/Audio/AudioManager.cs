@@ -1,5 +1,6 @@
 // Persistent owner of the audio backend and the one entry point gameplay calls
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace Hedgewitch.Audio
 {
@@ -7,6 +8,9 @@ namespace Hedgewitch.Audio
     [DisallowMultipleComponent]
     public class AudioManager : MonoBehaviour
     {
+        [Tooltip("Mixer with the exposed volume parameters such as MasterVolume.")]
+        [SerializeField] private AudioMixer mixer;
+
         [Tooltip("AudioSources made up front.")]
         [Min(0)] [SerializeField] private int initialVoices = 16;
 
@@ -20,6 +24,8 @@ namespace Hedgewitch.Audio
         private IAudioBackend backend;
 
         public static bool HasInstance => instance != null;
+
+        public static AudioMixer Mixer => instance != null ? instance.mixer : null;
 
         public static IAudioBackend Backend
         {
@@ -71,6 +77,7 @@ namespace Hedgewitch.Audio
 
             manager.backend?.StopAll(0f);
             manager.backend = replacement;
+            AudioVolume.ApplyAll();
         }
 
         private static AudioManager GetOrCreate()
@@ -111,7 +118,16 @@ namespace Hedgewitch.Audio
                 DontDestroyOnLoad(gameObject);
             }
 
-            backend = new UnityAudioBackend(transform, initialVoices, maxVoices);
+            backend = new UnityAudioBackend(transform, initialVoices, maxVoices, mixer);
+        }
+
+        // Mixer values only stick after Awake
+        private void Start()
+        {
+            if (instance == this && mixer != null)
+            {
+                AudioVolume.ApplyAll();
+            }
         }
 
         private void LateUpdate()
@@ -133,6 +149,7 @@ namespace Hedgewitch.Audio
         private void OnApplicationQuit()
         {
             quitting = true;
+            AudioVolume.Save();
         }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]

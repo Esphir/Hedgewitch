@@ -1,6 +1,7 @@
 // Default backend that plays sound events through a pool of AudioSources with per event voice limits
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace Hedgewitch.Audio
 {
@@ -69,14 +70,18 @@ namespace Hedgewitch.Audio
         private const float LostFollowFade = 0.15f;
 
         private readonly Transform root;
+        private readonly AudioMixer mixer;
         private readonly int maxVoices;
         private readonly List<Voice> voices = new List<Voice>();
         private readonly Dictionary<SoundEvent, float> lastStartTimes = new Dictionary<SoundEvent, float>();
+        private readonly HashSet<AudioBus> warnedBuses = new HashSet<AudioBus>();
+        private bool warnedNoMixer;
         private int playCounter;
 
-        public UnityAudioBackend(Transform root, int initialVoices, int maxVoices)
+        public UnityAudioBackend(Transform root, int initialVoices, int maxVoices, AudioMixer mixer = null)
         {
             this.root = root;
+            this.mixer = mixer;
             this.maxVoices = Mathf.Max(1, maxVoices);
 
             int warm = Mathf.Clamp(initialVoices, 0, this.maxVoices);
@@ -138,6 +143,26 @@ namespace Hedgewitch.Audio
                 {
                     voices[i].Stop(voices[i].PlayId, fadeTime);
                 }
+            }
+        }
+
+        public void SetBusVolume(AudioBus bus, float linear)
+        {
+            if (mixer == null)
+            {
+                if (!warnedNoMixer)
+                {
+                    warnedNoMixer = true;
+                    Debug.LogWarning("[Audio] AudioManager has no mixer assigned so volume settings do nothing.");
+                }
+
+                return;
+            }
+
+            string parameter = AudioVolume.ParameterName(bus);
+            if (!mixer.SetFloat(parameter, AudioVolume.LinearToDecibels(linear)) && warnedBuses.Add(bus))
+            {
+                Debug.LogWarning($"[Audio] Mixer {mixer.name} has no exposed parameter called {parameter}.", mixer);
             }
         }
 
