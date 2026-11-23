@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72b778e83c6e1ad45aba8e955294b715, type: 3}
+  m_Name: Player_Dash
+  m_EditorClassIdentifier: Hedgewitch.Audio::Hedgewitch.Audio.SoundEvent
+  eventName: 
+  clips: []
+  output: {fileID: 1393994945047727352, guid: 6b56defc0ab54304c9284b6f3e3d0235, type: 2}
+  volume: 1
+  volumeVariation: 0
+  pitchOffset: 0
+  pitchVariation: 0.5
+  spatialBlend: 1
+  minDistance: 2
+  maxDistance: 30
+  loop: 0
+  maxInstances: 2
+  minRetriggerInterval: 0.1

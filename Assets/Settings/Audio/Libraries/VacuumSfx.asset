@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3789ea00399991746858ab8a1b628271, type: 3}
+  m_Name: VacuumSfx
+  m_EditorClassIdentifier: Hedgewitch.Audio::Hedgewitch.Audio.VacuumSfxProfile
+  switchClick: {fileID: 11400000, guid: 256700cb6496ba442b10faa13513a48d, type: 2}
+  powerOn: {fileID: 11400000, guid: 9dd29d5bd1f675841b7f5e137d3d145c, type: 2}
+  runningLoop: {fileID: 11400000, guid: 756afc180f4f8734a8d7085d9b4f1691, type: 2}
+  suckUpObject: {fileID: 11400000, guid: 6545337a83f3ae34ca9093f28b475820, type: 2}
+  powerOff: {fileID: 11400000, guid: 98d31e54c368eeb4ca26554d198ebccc, type: 2}
+  powerOnDelay: 0.06
+  loopStartDelay: 0.35
+  powerOffDelay: 0.04
+  loopStopDelay: 0.08
+  loopFadeOut: 0.3

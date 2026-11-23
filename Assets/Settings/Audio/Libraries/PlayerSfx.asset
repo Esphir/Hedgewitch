@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e1be34afed3a6c4fa2ed03d88a32c5f, type: 3}
+  m_Name: PlayerSfx
+  m_EditorClassIdentifier: Hedgewitch.Audio::Hedgewitch.Audio.PlayerSfx
+  footsteps: {fileID: 11400000, guid: 0323520d40c3b0f42ae17bc568c35241, type: 2}
+  dash: {fileID: 11400000, guid: f136fd428d0aba14c9c4e52ce1fb9086, type: 2}
+  openInventory: {fileID: 11400000, guid: 3212426af9b040e458af523e9632028e, type: 2}
+  hurt: {fileID: 11400000, guid: b56a24ecafd9b8042b1cb358868b9a99, type: 2}
+  death: {fileID: 11400000, guid: 6c0f3d28a7da5bd4290723e0471b667c, type: 2}

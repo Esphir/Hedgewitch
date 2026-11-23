@@ -30,9 +30,162 @@ namespace Hedgewitch.Audio.EditorTools
         public static void SetUpAll()
         {
             AudioMixer mixer = EnsureMixer();
+            EnsureLibraries(mixer);
             EnsureSystemPrefab(mixer);
             AssetDatabase.SaveAssets();
             Debug.Log("[Audio] Audio assets are set up.");
+        }
+
+        public const string EventsRoot = Root + "/Events";
+        public const string LibrariesRoot = Root + "/Libraries";
+
+        private struct EventSpec
+        {
+            public string Name;
+            public string Group;
+            public float Blend;
+            public bool Loop;
+            public int Instances;
+            public float Retrigger;
+            public float Pitch;
+            public float PitchVariation;
+            public float VolumeVariation;
+
+            public EventSpec(string name, string group, float blend, int instances, float retrigger, bool loop = false)
+            {
+                Name = name;
+                Group = group;
+                Blend = blend;
+                Instances = instances;
+                Retrigger = retrigger;
+                Loop = loop;
+                Pitch = 0f;
+                PitchVariation = 0f;
+                VolumeVariation = 0f;
+            }
+
+            public EventSpec Varied(float pitchVariation, float volumeVariation)
+            {
+                PitchVariation = pitchVariation;
+                VolumeVariation = volumeVariation;
+                return this;
+            }
+
+            public EventSpec Shifted(float semitones)
+            {
+                Pitch = semitones;
+                return this;
+            }
+        }
+
+        // Library asset then each serialized field and the event it gets
+        private static readonly (Type type, string asset, (string field, EventSpec spec)[] slots)[] Libraries =
+        {
+            (typeof(PlayerSfx), "PlayerSfx", new[]
+            {
+                ("footsteps", new EventSpec("Player_Footsteps", "Player", 1f, 3, 0.08f).Varied(1f, 0.15f)),
+                ("dash", new EventSpec("Player_Dash", "Player", 1f, 2, 0.1f).Varied(0.5f, 0f)),
+                ("openInventory", new EventSpec("Player_OpenInventory", "UI", 0f, 1, 0.1f)),
+                ("hurt", new EventSpec("Player_Hurt", "Player", 1f, 2, 0.1f).Varied(1f, 0f)),
+                ("death", new EventSpec("Player_Death", "Player", 1f, 1, 0.5f))
+            }),
+            (typeof(BroomSfxProfile), "BroomSfx", new[]
+            {
+                ("equip", new EventSpec("Broom_Equip", "Weapons", 1f, 1, 0.05f)),
+                ("attack", new EventSpec("Broom_Attack", "Weapons", 1f, 3, 0.05f).Varied(1.5f, 0.1f)),
+                ("hit", new EventSpec("Broom_Hit", "Weapons", 1f, 4, 0.03f).Varied(1f, 0.1f))
+            }),
+            (typeof(GunSfxProfile), "GunSfx", new[]
+            {
+                ("equip", new EventSpec("Gun_Equip", "Weapons", 1f, 1, 0.05f)),
+                ("reload", new EventSpec("Gun_Reload", "Weapons", 1f, 1, 0.1f)),
+                ("shoot", new EventSpec("Gun_Shoot", "Weapons", 1f, 2, 0.05f).Varied(0.5f, 0.05f)),
+                ("empty", new EventSpec("Gun_Empty", "Weapons", 1f, 1, 0.1f).Shifted(5f))
+            }),
+            (typeof(VacuumSfxProfile), "VacuumSfx", new[]
+            {
+                ("switchClick", new EventSpec("Vacuum_SwitchClick", "Weapons", 1f, 2, 0.03f)),
+                ("powerOn", new EventSpec("Vacuum_PowerOn", "Weapons", 1f, 1, 0.05f)),
+                ("runningLoop", new EventSpec("Vacuum_RunningLoop", "Weapons", 1f, 1, 0f, true)),
+                ("suckUpObject", new EventSpec("Vacuum_SuckUpObject", "Weapons", 1f, 6, 0.03f).Varied(2f, 0.1f)),
+                ("powerOff", new EventSpec("Vacuum_PowerOff", "Weapons", 1f, 1, 0.05f))
+            }),
+            (typeof(EnemySfxProfile), "EnemySfx_Basic", new[]
+            {
+                ("footsteps", new EventSpec("Enemy_Basic_Footsteps", "Enemies", 1f, 6, 0.05f).Varied(1f, 0.15f)),
+                ("attack", new EventSpec("Enemy_Basic_Attack", "Enemies", 1f, 4, 0.1f).Varied(1f, 0f)),
+                ("hurt", new EventSpec("Enemy_Basic_Hurt", "Enemies", 1f, 4, 0.05f).Varied(1f, 0f)),
+                ("death", new EventSpec("Enemy_Basic_Death", "Enemies", 1f, 4, 0.05f).Varied(1f, 0f))
+            }),
+            (typeof(MusicLibrary), "MusicLibrary", new[]
+            {
+                ("titleTrack", new EventSpec("Music_Title", "Music", 0f, 1, 0f, true)),
+                ("levelExplore", new EventSpec("Music_LevelExplore", "Music", 0f, 1, 0f, true)),
+                ("levelFight", new EventSpec("Music_LevelFight", "Music", 0f, 1, 0f, true))
+            })
+        };
+
+        public static T LoadLibrary<T>(string assetName) where T : SfxLibrary
+        {
+            return AssetDatabase.LoadAssetAtPath<T>($"{LibrariesRoot}/{assetName}.asset");
+        }
+
+        // Creates missing events and libraries and fills empty slots without touching anything already set
+        public static void EnsureLibraries(AudioMixer mixer)
+        {
+            EnsureFolder(LibrariesRoot);
+
+            foreach ((Type type, string assetName, (string field, EventSpec spec)[] slots) in Libraries)
+            {
+                string libraryPath = $"{LibrariesRoot}/{assetName}.asset";
+                SfxLibrary library = AssetDatabase.LoadAssetAtPath<SfxLibrary>(libraryPath);
+                if (library == null)
+                {
+                    library = (SfxLibrary)ScriptableObject.CreateInstance(type);
+                    AssetDatabase.CreateAsset(library, libraryPath);
+                }
+
+                SerializedObject data = new SerializedObject(library);
+                foreach ((string field, EventSpec spec) in slots)
+                {
+                    SerializedProperty slot = data.FindProperty(field);
+                    if (slot.objectReferenceValue == null)
+                    {
+                        slot.objectReferenceValue = EnsureEvent(spec, mixer);
+                    }
+                }
+
+                data.ApplyModifiedPropertiesWithoutUndo();
+            }
+        }
+
+        private static SoundEvent EnsureEvent(EventSpec spec, AudioMixer mixer)
+        {
+            string category = spec.Name.Substring(0, spec.Name.IndexOf('_'));
+            string folder = $"{EventsRoot}/{category}";
+            string path = $"{folder}/{spec.Name}.asset";
+
+            SoundEvent existing = AssetDatabase.LoadAssetAtPath<SoundEvent>(path);
+            if (existing != null)
+            {
+                return existing;
+            }
+
+            EnsureFolder(folder);
+            SoundEvent sound = ScriptableObject.CreateInstance<SoundEvent>();
+            AssetDatabase.CreateAsset(sound, path);
+
+            SerializedObject data = new SerializedObject(sound);
+            data.FindProperty("output").objectReferenceValue = FindGroup(mixer, spec.Group);
+            data.FindProperty("spatialBlend").floatValue = spec.Blend;
+            data.FindProperty("loop").boolValue = spec.Loop;
+            data.FindProperty("maxInstances").intValue = spec.Instances;
+            data.FindProperty("minRetriggerInterval").floatValue = spec.Retrigger;
+            data.FindProperty("pitchOffset").floatValue = spec.Pitch;
+            data.FindProperty("pitchVariation").floatValue = spec.PitchVariation;
+            data.FindProperty("volumeVariation").floatValue = spec.VolumeVariation;
+            data.ApplyModifiedPropertiesWithoutUndo();
+            return sound;
         }
 
         public static AudioMixerGroup FindGroup(AudioMixer mixer, string groupName)
