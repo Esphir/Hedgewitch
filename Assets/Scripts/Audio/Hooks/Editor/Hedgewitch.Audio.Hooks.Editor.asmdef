@@ -1,0 +1,22 @@
+{
+    "name": "Hedgewitch.Audio.Hooks.Editor",
+    "rootNamespace": "Hedgewitch.Audio.Hooks.EditorTools",
+    "references": [
+        "Hedgewitch.Audio",
+        "Hedgewitch.Audio.Editor",
+        "Hedgewitch.Audio.Hooks",
+        "Hedgewitch.Combat",
+        "Hedgewitch.Vacuum"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -66,6 +66,8 @@ GameObject:
   - component: {fileID: 2021177074526802175}
   - component: {fileID: 1998345226592407377}
   - component: {fileID: 2348653197638461927}
+  - component: {fileID: 5723869784292099692}
+  - component: {fileID: 404353346899846790}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -420,6 +422,35 @@ MonoBehaviour:
   input: {fileID: 0}
   aim: {fileID: 0}
   controller: {fileID: 0}
+--- !u!114 &5723869784292099692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6514952137255486513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d183050870b4a8247bd5afd2db70e046, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Hedgewitch.Audio.Hooks::Hedgewitch.Audio.Hooks.PlayerAudio
+  sounds: {fileID: 11400000, guid: 4671abd90767f0b4e9b5c1cda5ba492e, type: 2}
+  strideLength: 1.4
+--- !u!114 &404353346899846790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6514952137255486513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9402c07045cd4bd4b8b4d1eaade08dac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Hedgewitch.Audio.Hooks::Hedgewitch.Audio.Hooks.WeaponAudio
+  broom: {fileID: 11400000, guid: 7dccec551cacbf641b60eefb9f055321, type: 2}
+  gun: {fileID: 11400000, guid: a2921db37e70ee64f851bd07bb3c9741, type: 2}
+  vacuum: {fileID: 11400000, guid: 72352ee473ce2ac4a8725872d03957ec, type: 2}
 --- !u!1 &7015670016033886915
 GameObject:
   m_ObjectHideFlags: 0

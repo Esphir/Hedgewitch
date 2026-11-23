@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 925908926278261003}
   - component: {fileID: 4075267478460650322}
   - component: {fileID: 6173598635627084032}
-  - component: {fileID: 3798447431770562007}
   m_Layer: 0
   m_Name: Vacuum Rig
   m_TagString: Untagged
@@ -150,35 +149,6 @@ MonoBehaviour:
   shakeFrequency: 28
   lightIntensityAtFullPower: 2.5
   smoothing: 10
---- !u!114 &3798447431770562007
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 191695701992170435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0701b7d24d6b49d46b8507573320a528, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.Feedback.VacuumAudio
-  controller: {fileID: 377531759627599933}
-  loopSource: {fileID: 0}
-  strainSource: {fileID: 0}
-  oneShotSource: {fileID: 0}
-  loopClip: {fileID: 0}
-  strainClip: {fileID: 0}
-  startClip: {fileID: 0}
-  stopClip: {fileID: 0}
-  defaultCaptureClip: {fileID: 0}
-  captureClips: []
-  loopVolume: 0.7
-  idlePitch: 0.6
-  runPitch: 1.05
-  loadPitchDrop: 0.25
-  strainVolume: 0.6
-  strainThreshold: 0.15
-  smoothing: 12
 --- !u!1 &1682226727238479889
 GameObject:
   m_ObjectHideFlags: 0

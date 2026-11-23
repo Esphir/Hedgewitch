@@ -267,8 +267,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.Objects.VacuumCollectibleOnCapture
   valueOverride: 0
   categoryOverride: 0
-  captureSound: {fileID: 0}
-  captureSoundVolume: 0.8
 --- !u!114 &126138651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -620,8 +618,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.Objects.VacuumCollectibleOnCapture
   valueOverride: 0
   categoryOverride: 0
-  captureSound: {fileID: 0}
-  captureSoundVolume: 0.8
 --- !u!114 &207085991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1423,6 +1419,63 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 409955676}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &511729006
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6493457445518696298, guid: a99363e4742eb92409c4315500912d12, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6493457445518696298, guid: a99363e4742eb92409c4315500912d12, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6493457445518696298, guid: a99363e4742eb92409c4315500912d12, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6493457445518696298, guid: a99363e4742eb92409c4315500912d12, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6493457445518696298, guid: a99363e4742eb92409c4315500912d12, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6493457445518696298, guid: a99363e4742eb92409c4315500912d12, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6493457445518696298, guid: a99363e4742eb92409c4315500912d12, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6493457445518696298, guid: a99363e4742eb92409c4315500912d12, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6493457445518696298, guid: a99363e4742eb92409c4315500912d12, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6493457445518696298, guid: a99363e4742eb92409c4315500912d12, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6973098633943708093, guid: a99363e4742eb92409c4315500912d12, type: 3}
+      propertyPath: m_Name
+      value: AudioSystem
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a99363e4742eb92409c4315500912d12, type: 3}
 --- !u!1 &545309150
 GameObject:
   m_ObjectHideFlags: 0
@@ -1808,8 +1861,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.Objects.VacuumCollectibleOnCapture
   valueOverride: 0
   categoryOverride: 0
-  captureSound: {fileID: 0}
-  captureSoundVolume: 0.8
 --- !u!114 &569577169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1992,8 +2043,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.Objects.VacuumCollectibleOnCapture
   valueOverride: 0
   categoryOverride: 0
-  captureSound: {fileID: 0}
-  captureSoundVolume: 0.8
 --- !u!114 &594182204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2178,8 +2227,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.Objects.VacuumCollectibleOnCapture
   valueOverride: 0
   categoryOverride: 0
-  captureSound: {fileID: 0}
-  captureSoundVolume: 0.8
 --- !u!114 &648052603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2362,8 +2409,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.Objects.VacuumCollectibleOnCapture
   valueOverride: 0
   categoryOverride: 0
-  captureSound: {fileID: 0}
-  captureSoundVolume: 0.8
 --- !u!114 &783926610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3270,6 +3315,51 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1049823680}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1055953551
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1055953553}
+  - component: {fileID: 1055953552}
+  m_Layer: 0
+  m_Name: Music Cue (Level)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1055953552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055953551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d59a35b31d4f19409edbf14d8d213fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Hedgewitch.Audio::Hedgewitch.Audio.MusicCue
+  music: 2
+--- !u!4 &1055953553
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055953551}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1071395788
 GameObject:
   m_ObjectHideFlags: 0
@@ -3354,8 +3444,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.Objects.VacuumCollectibleOnCapture
   valueOverride: 0
   categoryOverride: 0
-  captureSound: {fileID: 0}
-  captureSoundVolume: 0.8
 --- !u!114 &1073333557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3540,8 +3628,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.Objects.VacuumCollectibleOnCapture
   valueOverride: 0
   categoryOverride: 0
-  captureSound: {fileID: 0}
-  captureSoundVolume: 0.8
 --- !u!114 &1088532660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4236,8 +4322,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.Objects.VacuumCollectibleOnCapture
   valueOverride: 0
   categoryOverride: 0
-  captureSound: {fileID: 0}
-  captureSoundVolume: 0.8
 --- !u!114 &1344271805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4422,8 +4506,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.Objects.VacuumCollectibleOnCapture
   valueOverride: 0
   categoryOverride: 0
-  captureSound: {fileID: 0}
-  captureSoundVolume: 0.8
 --- !u!114 &1366624433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4606,8 +4688,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.Objects.VacuumCollectibleOnCapture
   valueOverride: 0
   categoryOverride: 0
-  captureSound: {fileID: 0}
-  captureSoundVolume: 0.8
 --- !u!114 &1382803138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4959,8 +5039,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.Objects.VacuumCollectibleOnCapture
   valueOverride: 0
   categoryOverride: 0
-  captureSound: {fileID: 0}
-  captureSoundVolume: 0.8
 --- !u!114 &1402156135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6092,8 +6170,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.Objects.VacuumCollectibleOnCapture
   valueOverride: 0
   categoryOverride: 0
-  captureSound: {fileID: 0}
-  captureSoundVolume: 0.8
 --- !u!114 &1788339621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6445,8 +6521,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.Objects.VacuumCollectibleOnCapture
   valueOverride: 0
   categoryOverride: 0
-  captureSound: {fileID: 0}
-  captureSoundVolume: 0.8
 --- !u!114 &1826250719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6629,8 +6703,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.Objects.VacuumCollectibleOnCapture
   valueOverride: 0
   categoryOverride: 0
-  captureSound: {fileID: 0}
-  captureSoundVolume: 0.8
 --- !u!114 &1837742653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6815,8 +6887,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.Objects.VacuumCollectibleOnCapture
   valueOverride: 0
   categoryOverride: 0
-  captureSound: {fileID: 0}
-  captureSoundVolume: 0.8
 --- !u!114 &1842586797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7206,6 +7276,7 @@ GameObject:
   - component: {fileID: 1859810705}
   - component: {fileID: 1859810713}
   - component: {fileID: 1859810712}
+  - component: {fileID: 1859810714}
   m_Layer: 0
   m_Name: Brute
   m_TagString: Untagged
@@ -7457,6 +7528,20 @@ MonoBehaviour:
   invulnerabilityAfterHit: 0
   defeatOutcome: 0
   defeatDelay: 0.35
+--- !u!114 &1859810714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1859810703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87752a4bfb7260c4787147ed055a0cb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Hedgewitch.Audio.Hooks::Hedgewitch.Audio.Hooks.EnemyAudio
+  profile: {fileID: 11400000, guid: fc8f7ed7689d9c74782cf27ec735e8a2, type: 2}
+  strideLength: 1.1
 --- !u!1 &1864410358
 GameObject:
   m_ObjectHideFlags: 0
@@ -8075,8 +8160,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.Objects.VacuumCollectibleOnCapture
   valueOverride: 0
   categoryOverride: 0
-  captureSound: {fileID: 0}
-  captureSoundVolume: 0.8
 --- !u!114 &1946936906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8672,6 +8755,7 @@ GameObject:
   - component: {fileID: 2016724519}
   - component: {fileID: 2016724527}
   - component: {fileID: 2016724526}
+  - component: {fileID: 2016724528}
   m_Layer: 0
   m_Name: Shade
   m_TagString: Untagged
@@ -8923,6 +9007,20 @@ MonoBehaviour:
   invulnerabilityAfterHit: 0
   defeatOutcome: 0
   defeatDelay: 0.35
+--- !u!114 &2016724528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016724517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87752a4bfb7260c4787147ed055a0cb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Hedgewitch.Audio.Hooks::Hedgewitch.Audio.Hooks.EnemyAudio
+  profile: {fileID: 11400000, guid: fc8f7ed7689d9c74782cf27ec735e8a2, type: 2}
+  strideLength: 1.1
 --- !u!1 &2104912749
 GameObject:
   m_ObjectHideFlags: 0
@@ -8974,8 +9072,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.Objects.VacuumCollectibleOnCapture
   valueOverride: 0
   categoryOverride: 0
-  captureSound: {fileID: 0}
-  captureSoundVolume: 0.8
 --- !u!114 &2104912752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9348,3 +9444,5 @@ SceneRoots:
   - {fileID: 1847574489}
   - {fileID: 1071395789}
   - {fileID: 811916066}
+  - {fileID: 511729006}
+  - {fileID: 1055953553}

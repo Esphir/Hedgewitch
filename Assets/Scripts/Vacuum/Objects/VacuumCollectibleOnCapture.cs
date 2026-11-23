@@ -12,11 +12,6 @@ namespace Hedgewitch.Vacuum.Objects
         [Tooltip("Category banked. None means use the object's own category.")]
         [SerializeField] private VacuumCategory categoryOverride = VacuumCategory.None;
 
-        [Tooltip("Optional one-shot sound played at the nozzle on capture.")]
-        [SerializeField] private AudioClip captureSound;
-
-        [Range(0f, 1f)] [SerializeField] private float captureSoundVolume = 0.8f;
-
         public bool AllowCapture(in VacuumCaptureContext context)
         {
             return true;
@@ -44,11 +39,6 @@ namespace Hedgewitch.Vacuum.Objects
 
             VacuumCollection collection = context.Controller != null ? context.Controller.Collection : null;
             collection?.Add(category, 1, value);
-
-            if (captureSound != null)
-            {
-                AudioSource.PlayClipAtPoint(captureSound, context.NozzleOrigin, captureSoundVolume);
-            }
         }
 
         public void OnCaptureCancelled(in VacuumCaptureContext context)
