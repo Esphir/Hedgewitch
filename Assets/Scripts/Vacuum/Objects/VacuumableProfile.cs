@@ -3,7 +3,6 @@ using UnityEngine;
 namespace Hedgewitch.Vacuum.Objects
 {
     /// <summary>A reusable material-and-weight preset for vacuumable props.</summary>
-    [CreateAssetMenu(menuName = "Hedgewitch/Vacuum/Vacuumable Profile", fileName = "VacuumableProfile")]
     public class VacuumableProfile : ScriptableObject
     {
         [Header("Identity")]

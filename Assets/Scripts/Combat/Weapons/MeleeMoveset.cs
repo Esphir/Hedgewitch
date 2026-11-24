@@ -75,7 +75,6 @@ namespace Hedgewitch.Combat
         }
     }
 
-    [CreateAssetMenu(menuName = "Hedgewitch/Combat/Melee Moveset", fileName = "MeleeMoveset")]
     public class MeleeMoveset : ScriptableObject
     {
         [Tooltip("Pressed with the primary button. The last step should be a finisher.")]

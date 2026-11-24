@@ -3,7 +3,6 @@ using UnityEngine;
 namespace Hedgewitch.Vacuum
 {
     /// <summary>All tunable parameters of a vacuum.</summary>
-    [CreateAssetMenu(menuName = "Hedgewitch/Vacuum/Vacuum Settings", fileName = "VacuumSettings")]
     public class VacuumSettings : ScriptableObject
     {
         [Header("Detection")]
