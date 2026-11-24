@@ -11,10 +11,62 @@ namespace Hedgewitch.Audio.Editor.Tests
     {
         private const string TempFolder = "Assets/__AudioEditorTestTemp";
 
+        private const string TestLibraryName = "ZzAudioTestLibrary";
+
         [TearDown]
         public void TearDown()
         {
             AssetDatabase.DeleteAsset(TempFolder);
+            AssetDatabase.DeleteAsset($"{AudioAssetSetup.EventsRoot}/{TestLibraryName}");
+        }
+
+        private static SoundLibrary MakeLibraryAsset()
+        {
+            AssetDatabase.CreateFolder("Assets", TempFolder.Substring("Assets/".Length));
+            SoundLibrary library = ScriptableObject.CreateInstance<SoundLibrary>();
+            AssetDatabase.CreateAsset(library, $"{TempFolder}/{TestLibraryName}.asset");
+            return library;
+        }
+
+        [Test]
+        public void CreateSoundMakesAnEventAndAddsItToTheLibrary()
+        {
+            SoundLibrary library = MakeLibraryAsset();
+            UnityEngine.Audio.AudioMixerGroup ui = AudioAssetSetup.FindGroup(
+                AssetDatabase.LoadAssetAtPath<UnityEngine.Audio.AudioMixer>(AudioAssetSetup.MixerPath), "UI");
+
+            SoundEvent created = SoundLibraryTools.CreateSound(library, "Button Click", ui, false, out string error);
+
+            Assert.IsNull(error);
+            Assert.IsNotNull(created);
+            Assert.AreEqual($"{AudioAssetSetup.EventsRoot}/{TestLibraryName}/{TestLibraryName}_Button_Click.asset", AssetDatabase.GetAssetPath(created));
+            Assert.AreSame(created, library.Find("Button_Click"));
+            Assert.AreSame(ui, created.Output);
+            Assert.AreEqual(0f, created.SpatialBlend, "UI sounds should be flat");
+        }
+
+        [Test]
+        public void CreateSoundRejectsBlankAndDuplicateNames()
+        {
+            SoundLibrary library = MakeLibraryAsset();
+            Assert.IsNotNull(SoundLibraryTools.CreateSound(library, "Wind", null, true, out _));
+
+            Assert.IsNull(SoundLibraryTools.CreateSound(library, "  ", null, false, out string blank));
+            Assert.IsNull(SoundLibraryTools.CreateSound(library, "wind", null, false, out string duplicate));
+            StringAssert.Contains("name", blank);
+            StringAssert.Contains("already has", duplicate);
+            Assert.AreEqual(1, library.ExtraSounds.Count);
+        }
+
+        [Test]
+        public void NameProblemsFlagsBlankAndRepeatedNames()
+        {
+            SoundLibrary library = MakeLibraryAsset();
+            library.AddExtraSound("Rain", null);
+            library.AddExtraSound("rain", null);
+            library.AddExtraSound("", null);
+
+            Assert.AreEqual(2, SoundLibraryTools.NameProblems(library).Count);
         }
 
         private static string WriteWav(string fileName)

@@ -117,6 +117,25 @@ namespace Hedgewitch.Audio.EditorTools
                         });
                     }
                 }
+
+                foreach (string problem in SoundLibraryTools.NameProblems(library))
+                {
+                    report.Issues.Add(new Issue { Severity = Severity.Setup, Asset = library, Where = path, Message = problem });
+                }
+
+                foreach (SoundSlot extra in library.ExtraSounds)
+                {
+                    if (extra.sound == null && !string.IsNullOrWhiteSpace(extra.name))
+                    {
+                        report.Issues.Add(new Issue
+                        {
+                            Severity = Severity.Unassigned,
+                            Asset = library,
+                            Where = path,
+                            Message = $"{library.name} > {extra.name} has no sound event"
+                        });
+                    }
+                }
             }
 
             report.Issues.Sort((a, b) => a.Severity != b.Severity ? a.Severity.CompareTo(b.Severity) : string.CompareOrdinal(a.Message, b.Message));
