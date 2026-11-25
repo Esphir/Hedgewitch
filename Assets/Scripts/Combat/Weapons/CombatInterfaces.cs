@@ -18,6 +18,11 @@ namespace Hedgewitch.Combat
 
         // Slot cycle direction this frame or 0
         public int CycleSlot;
+
+        public bool DashPressed;
+
+        // Where the player is steering in world space with length up to 1
+        public Vector3 MoveDirection;
     }
 
     public interface ICombatInput
@@ -46,5 +51,8 @@ namespace Hedgewitch.Combat
         void HoldMoveScale(float scale, float seconds);
 
         void Lunge(Vector3 velocity, float seconds);
+
+        // Exact velocity that ignores steering and seconds of 0 or less ends it early
+        void Dash(Vector3 velocity, float seconds);
     }
 }

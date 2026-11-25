@@ -61,10 +61,17 @@ namespace Hedgewitch.Vacuum.Demo
         private float heldMoveScaleTimer;
         private Vector3 lungeVelocity;
         private float lungeTimer;
+        private Vector3 dashVelocity;
+        private float dashTimer;
 
         public bool IsGrounded => grounded;
 
         public bool IsVacuuming => vacuum != null && vacuum.IsSucking;
+
+        public bool IsDashing => dashTimer > 0f;
+
+        // Stick or keys in world space with length up to 1
+        public Vector3 MoveIntent => planarInput;
 
         // Overrides walk and aim facing for a while
         public void HoldFacing(Vector3 direction, float seconds)
@@ -102,6 +109,21 @@ namespace Hedgewitch.Vacuum.Demo
 
             lungeVelocity = velocity;
             lungeTimer = seconds;
+        }
+
+        // Drives the body at this exact velocity ignoring input and seconds of 0 or less ends it early
+        public void Dash(Vector3 velocity, float seconds)
+        {
+            velocity.y = 0f;
+            if (seconds <= 0f)
+            {
+                EndDash();
+                return;
+            }
+
+            dashVelocity = velocity;
+            dashTimer = seconds;
+            lungeTimer = 0f;
         }
 
         private void Awake()
@@ -145,6 +167,13 @@ namespace Hedgewitch.Vacuum.Demo
             }
         }
 
+        // A stagger switches this off so its knockback must not be overwritten by a dash
+        private void OnDisable()
+        {
+            dashTimer = 0f;
+            dashVelocity = Vector3.zero;
+        }
+
         private void Update()
         {
             if (input == null)
@@ -175,7 +204,15 @@ namespace Hedgewitch.Vacuum.Demo
                 lastGroundedTime = Time.time;
             }
 
-            MoveBody(deltaTime);
+            if (dashTimer > 0f)
+            {
+                DashBody(deltaTime);
+            }
+            else
+            {
+                MoveBody(deltaTime);
+            }
+
             FaceDirection(deltaTime);
             HandleJump();
             ApplyFallBoost();
@@ -183,6 +220,38 @@ namespace Hedgewitch.Vacuum.Demo
             heldFacingTimer = Mathf.Max(0f, heldFacingTimer - deltaTime);
             heldMoveScaleTimer = Mathf.Max(0f, heldMoveScaleTimer - deltaTime);
             lungeTimer = Mathf.Max(0f, lungeTimer - deltaTime);
+        }
+
+        private void DashBody(float deltaTime)
+        {
+            Vector3 velocity = body.linearVelocity;
+            body.linearVelocity = new Vector3(dashVelocity.x, velocity.y, dashVelocity.z);
+
+            dashTimer -= deltaTime;
+            if (dashTimer <= 0f)
+            {
+                EndDash();
+            }
+        }
+
+        // Drops to walking speed so the dash stops crisply instead of sliding
+        private void EndDash()
+        {
+            if (dashTimer <= 0f && dashVelocity == Vector3.zero)
+            {
+                return;
+            }
+
+            dashTimer = 0f;
+            dashVelocity = Vector3.zero;
+            if (body == null)
+            {
+                return;
+            }
+
+            Vector3 velocity = body.linearVelocity;
+            Vector3 planar = Vector3.ClampMagnitude(new Vector3(velocity.x, 0f, velocity.z), moveSpeed);
+            body.linearVelocity = new Vector3(planar.x, velocity.y, planar.z);
         }
 
         private void MoveBody(float deltaTime)
@@ -220,7 +289,12 @@ namespace Hedgewitch.Vacuum.Demo
             Vector3 facing;
             float rate = turnSpeed;
 
-            if (heldFacingTimer > 0f)
+            if (dashTimer > 0f)
+            {
+                facing = dashVelocity;
+                rate = Mathf.Max(turnSpeed, actionTurnSpeed);
+            }
+            else if (heldFacingTimer > 0f)
             {
                 facing = heldFacing;
                 rate = Mathf.Max(turnSpeed, actionTurnSpeed);

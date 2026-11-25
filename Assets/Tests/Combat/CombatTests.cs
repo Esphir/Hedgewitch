@@ -66,6 +66,10 @@ namespace Hedgewitch.Combat.Tests
         public void Lunge(Vector3 velocity, float seconds)
         {
         }
+
+        public void Dash(Vector3 velocity, float seconds)
+        {
+        }
     }
 
     // Fake AI brain to check stagger switches it off

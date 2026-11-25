@@ -71,7 +71,9 @@ namespace Hedgewitch.Combat.Demo
                 SecondaryPressed = input.SecondaryPressed,
                 SecondaryHeld = input.SecondaryHeld,
                 SelectSlot = input.SelectedSlot,
-                CycleSlot = input.CycleDirection
+                CycleSlot = input.CycleDirection,
+                DashPressed = input.DashPressed,
+                MoveDirection = controller != null ? controller.MoveIntent : Vector3.zero
             };
         }
 
@@ -88,6 +90,11 @@ namespace Hedgewitch.Combat.Demo
         public void Lunge(Vector3 velocity, float seconds)
         {
             controller?.Lunge(velocity, seconds);
+        }
+
+        public void Dash(Vector3 velocity, float seconds)
+        {
+            controller?.Dash(velocity, seconds);
         }
     }
 }

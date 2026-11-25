@@ -37,6 +37,8 @@ namespace Hedgewitch.Vacuum.Demo
 
         public bool JumpPressed { get; private set; }
 
+        public bool DashPressed { get; private set; }
+
         public float CameraRotate { get; private set; }
 
         public float CameraZoom { get; private set; }
@@ -76,8 +78,12 @@ namespace Hedgewitch.Vacuum.Demo
         [SerializeField]
         private InputAction previousWeaponAction = new InputAction("PreviousWeapon", InputActionType.Button);
 
+        [Tooltip("Unbound by default because dash took Space and pad A.")]
         [SerializeField]
         private InputAction jumpAction = new InputAction("Jump", InputActionType.Button);
+
+        [SerializeField]
+        private InputAction dashAction = new InputAction("Dash", InputActionType.Button);
 
         [SerializeField]
         private InputAction cameraRotateAction = new InputAction("CameraRotate", InputActionType.Value, expectedControlType: "Axis");
@@ -100,7 +106,7 @@ namespace Hedgewitch.Vacuum.Demo
                 moveAction, aimAction, pointerAction, suckAction, secondaryAction,
                 weaponSlot1Action, weaponSlot2Action, weaponSlot3Action,
                 nextWeaponAction, previousWeaponAction,
-                jumpAction, cameraRotateAction, cameraZoomAction
+                jumpAction, dashAction, cameraRotateAction, cameraZoomAction
             };
         }
 
@@ -127,6 +133,7 @@ namespace Hedgewitch.Vacuum.Demo
             SelectedSlot = -1;
             CycleDirection = 0;
             JumpPressed = false;
+            DashPressed = false;
         }
 
         private void Update()
@@ -138,6 +145,7 @@ namespace Hedgewitch.Vacuum.Demo
             SecondaryHeld = secondaryAction.IsPressed();
             SecondaryPressed = secondaryAction.WasPressedThisFrame();
             JumpPressed = jumpAction.WasPressedThisFrame();
+            DashPressed = dashAction.WasPressedThisFrame();
             CameraRotate = cameraRotateAction.ReadValue<float>();
             CameraZoom = cameraZoomAction.ReadValue<float>();
 
@@ -180,6 +188,7 @@ namespace Hedgewitch.Vacuum.Demo
             nextWeaponAction ??= new InputAction("NextWeapon", InputActionType.Button);
             previousWeaponAction ??= new InputAction("PreviousWeapon", InputActionType.Button);
             jumpAction ??= new InputAction("Jump", InputActionType.Button);
+            dashAction ??= new InputAction("Dash", InputActionType.Button);
             cameraRotateAction ??= new InputAction("CameraRotate", InputActionType.Value, expectedControlType: "Axis");
             cameraZoomAction ??= new InputAction("CameraZoom", InputActionType.Value, expectedControlType: "Axis");
         }
@@ -253,10 +262,10 @@ namespace Hedgewitch.Vacuum.Demo
                 previousWeaponAction.AddBinding("<Gamepad>/leftShoulder");
             }
 
-            if (jumpAction.bindings.Count == 0)
+            if (dashAction.bindings.Count == 0)
             {
-                jumpAction.AddBinding("<Keyboard>/space");
-                jumpAction.AddBinding("<Gamepad>/buttonSouth");
+                dashAction.AddBinding("<Keyboard>/space");
+                dashAction.AddBinding("<Gamepad>/buttonSouth");
             }
 
             if (cameraRotateAction.bindings.Count == 0)
@@ -275,7 +284,8 @@ namespace Hedgewitch.Vacuum.Demo
         [SerializeField] private string horizontalAxis = "Horizontal";
         [SerializeField] private string verticalAxis = "Vertical";
         [SerializeField] private KeyCode suckKey = KeyCode.F;
-        [SerializeField] private KeyCode jumpKey = KeyCode.Space;
+        [SerializeField] private KeyCode jumpKey = KeyCode.None;
+        [SerializeField] private KeyCode dashKey = KeyCode.Space;
 
         private void Update()
         {
@@ -291,7 +301,8 @@ namespace Hedgewitch.Vacuum.Demo
                 : Input.GetKeyDown(KeyCode.Alpha3) ? 2
                 : -1;
             CycleDirection = 0;
-            JumpPressed = Input.GetKeyDown(jumpKey);
+            JumpPressed = jumpKey != KeyCode.None && Input.GetKeyDown(jumpKey);
+            DashPressed = Input.GetKeyDown(dashKey);
             CameraRotate = (Input.GetKey(KeyCode.E) ? 1f : 0f) - (Input.GetKey(KeyCode.Q) ? 1f : 0f);
             CameraZoom = Input.mouseScrollDelta.y;
             UsingPointer = true;
