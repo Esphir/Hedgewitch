@@ -123,6 +123,17 @@ namespace Hedgewitch.Combat
             return result;
         }
 
+        // Ignores hits for this long from now and never shortens an existing window
+        public void GrantInvulnerability(float seconds)
+        {
+            if (seconds > 0f)
+            {
+                invulnerableUntil = Mathf.Max(invulnerableUntil, Time.time + seconds);
+            }
+        }
+
+        public bool IsInvulnerable => Time.time < invulnerableUntil;
+
         public void Heal(float amount)
         {
             if (defeated || amount <= 0f)

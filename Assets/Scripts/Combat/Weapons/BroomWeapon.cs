@@ -94,6 +94,9 @@ namespace Hedgewitch.Combat
 
         public MeleeAttackStep CurrentStep => phase != Phase.Idle ? step : null;
 
+        // The broom model root so other scripts can pose it
+        public Transform SwingPivot => swingPivot;
+
         // -1 when the string has lapsed
         public int ComboIndex => stepIndex;
 
@@ -135,6 +138,11 @@ namespace Hedgewitch.Combat
         }
 
         protected override void OnUnequipped()
+        {
+            ResetString();
+        }
+
+        public override void CancelAction()
         {
             ResetString();
         }

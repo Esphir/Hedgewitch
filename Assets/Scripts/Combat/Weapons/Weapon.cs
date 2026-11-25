@@ -91,6 +91,11 @@ namespace Hedgewitch.Combat
 
         public abstract void TickInput(in CombatInputFrame input);
 
+        // Drops whatever attack is under way so a dash can interrupt it
+        public virtual void CancelAction()
+        {
+        }
+
         public void AddModifier(IWeaponModifier modifier)
         {
             if (modifier == null || modifiers.Contains(modifier))

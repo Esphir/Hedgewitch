@@ -37,6 +37,9 @@ namespace Hedgewitch.Combat
 
         public int CurrentIndex => currentIndex;
 
+        // Set while a dash runs so no attacks or swaps happen mid move
+        public bool InputSuspended { get; set; }
+
         public Weapon Current => currentIndex >= 0 && currentIndex < weapons.Count ? weapons[currentIndex] : null;
 
         // Old weapon then new and either may be null
@@ -72,7 +75,7 @@ namespace Hedgewitch.Combat
 
         private void Update()
         {
-            if (Input == null)
+            if (Input == null || InputSuspended)
             {
                 return;
             }
