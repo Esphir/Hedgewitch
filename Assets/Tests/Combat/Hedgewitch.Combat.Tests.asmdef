@@ -6,7 +6,8 @@
         "Hedgewitch.Vacuum",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "Unity.AI.Navigation"
+        "Unity.AI.Navigation",
+        "Unity.InputSystem"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
