@@ -14,8 +14,16 @@ namespace Hedgewitch.Audio
         [Tooltip("Played at the impact point of each enemy hit.")]
         [SerializeField] private SoundEvent hit;
 
+        [Tooltip("Layered over the player dash when riding the broom like a flying broom.")]
+        [SerializeField] private SoundEvent dashRide;
+
+        [Tooltip("Layered over the player dash when sweeping forward standing on the broom.")]
+        [SerializeField] private SoundEvent dashSweep;
+
         public SoundEvent Equip => equip;
         public SoundEvent Attack => attack;
         public SoundEvent Hit => hit;
+        public SoundEvent DashRide => dashRide;
+        public SoundEvent DashSweep => dashSweep;
     }
 }

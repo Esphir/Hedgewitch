@@ -93,7 +93,9 @@ namespace Hedgewitch.Audio.EditorTools
             {
                 ("equip", new EventSpec("Broom_Equip", "Weapons", 1f, 1, 0.05f)),
                 ("attack", new EventSpec("Broom_Attack", "Weapons", 1f, 3, 0.05f).Varied(1.5f, 0.1f)),
-                ("hit", new EventSpec("Broom_Hit", "Weapons", 1f, 4, 0.03f).Varied(1f, 0.1f))
+                ("hit", new EventSpec("Broom_Hit", "Weapons", 1f, 4, 0.03f).Varied(1f, 0.1f)),
+                ("dashRide", new EventSpec("Broom_DashRide", "Weapons", 1f, 2, 0.1f).Varied(0.5f, 0f)),
+                ("dashSweep", new EventSpec("Broom_DashSweep", "Weapons", 1f, 2, 0.1f).Varied(0.5f, 0f))
             }),
             (typeof(GunSfxProfile), "GunSfx", new[]
             {

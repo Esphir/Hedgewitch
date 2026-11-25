@@ -14,6 +14,7 @@ namespace Hedgewitch.Audio.Hooks
         [SerializeField] private VacuumSfxProfile vacuum;
 
         private WeaponInventory inventory;
+        private PlayerDash dash;
         private BroomWeapon[] brooms = new BroomWeapon[0];
         private MusketWeapon[] muskets = new MusketWeapon[0];
         private VacuumController vacuumController;
@@ -25,6 +26,7 @@ namespace Hedgewitch.Audio.Hooks
         private void Awake()
         {
             inventory = GetComponentInChildren<WeaponInventory>(true);
+            dash = GetComponentInChildren<PlayerDash>(true);
             brooms = GetComponentsInChildren<BroomWeapon>(true);
             muskets = GetComponentsInChildren<MusketWeapon>(true);
             vacuumController = GetComponentInChildren<VacuumController>(true);
@@ -37,6 +39,11 @@ namespace Hedgewitch.Audio.Hooks
             if (inventory != null)
             {
                 inventory.WeaponChanged += HandleWeaponChanged;
+            }
+
+            if (dash != null)
+            {
+                dash.Started += HandleDash;
             }
 
             foreach (BroomWeapon weapon in brooms)
@@ -64,6 +71,11 @@ namespace Hedgewitch.Audio.Hooks
             if (inventory != null)
             {
                 inventory.WeaponChanged -= HandleWeaponChanged;
+            }
+
+            if (dash != null)
+            {
+                dash.Started -= HandleDash;
             }
 
             foreach (BroomWeapon weapon in brooms)
@@ -111,6 +123,16 @@ namespace Hedgewitch.Audio.Hooks
             {
                 Play(gun != null ? gun.Equip : null, next.transform.position);
             }
+        }
+
+        private void HandleDash(PlayerDash source, DashStyle style)
+        {
+            if (broom == null || style == DashStyle.Regular)
+            {
+                return;
+            }
+
+            Play(style == DashStyle.BroomRide ? broom.DashRide : broom.DashSweep, source.transform.position);
         }
 
         private void HandleSwing(BroomWeapon weapon, MeleeAttackStep step)

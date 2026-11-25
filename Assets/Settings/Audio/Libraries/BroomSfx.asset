@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a2eeff2a9f0574e9c04ab54e3c0efe, type: 3}
   m_Name: BroomSfx
   m_EditorClassIdentifier: Hedgewitch.Audio::Hedgewitch.Audio.BroomSfxProfile
+  extraSounds: []
   equip: {fileID: 11400000, guid: 8d4b2e5fecebb3a4287f912f70939f90, type: 2}
   attack: {fileID: 11400000, guid: 698a1bbac98260a4999c3708bc8f5fcd, type: 2}
   hit: {fileID: 11400000, guid: f8dfd40819acbf14e95842ccff52fbee, type: 2}
+  dashRide: {fileID: 11400000, guid: c967cec803deda740bc75dae2d325afc, type: 2}
+  dashSweep: {fileID: 11400000, guid: 51f440b1198804b43a7cbfba9168fb65, type: 2}

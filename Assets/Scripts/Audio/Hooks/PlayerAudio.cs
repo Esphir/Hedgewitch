@@ -16,11 +16,13 @@ namespace Hedgewitch.Audio.Hooks
         private readonly FootstepTracker footsteps = new FootstepTracker();
         private IsometricPlayerController controller;
         private Health health;
+        private PlayerDash dash;
 
         private void Awake()
         {
             controller = GetComponent<IsometricPlayerController>();
             health = GetComponent<Health>();
+            dash = GetComponent<PlayerDash>();
         }
 
         private void OnEnable()
@@ -33,6 +35,11 @@ namespace Hedgewitch.Audio.Hooks
                 health.Damaged += HandleDamaged;
                 health.Defeated += HandleDefeated;
             }
+
+            if (dash != null)
+            {
+                dash.Started += HandleDash;
+            }
         }
 
         private void OnDisable()
@@ -43,6 +50,11 @@ namespace Hedgewitch.Audio.Hooks
             {
                 health.Damaged -= HandleDamaged;
                 health.Defeated -= HandleDefeated;
+            }
+
+            if (dash != null)
+            {
+                dash.Started -= HandleDash;
             }
         }
 
@@ -62,7 +74,7 @@ namespace Hedgewitch.Audio.Hooks
             Play(sounds != null ? sounds.Footsteps : null);
         }
 
-        // Ready for when dash exists
+        // Every dash style plays this and the broom adds its own layer
         public void PlayDash()
         {
             Play(sounds != null ? sounds.Dash : null);
@@ -72,6 +84,11 @@ namespace Hedgewitch.Audio.Hooks
         public void PlayOpenInventory()
         {
             AudioManager.Play(sounds != null ? sounds.OpenInventory : null);
+        }
+
+        private void HandleDash(PlayerDash source, DashStyle style)
+        {
+            PlayDash();
         }
 
         private void HandleDamaged(DamageInfo info, DamageResult result)
