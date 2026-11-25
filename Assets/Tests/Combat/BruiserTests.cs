@@ -120,7 +120,7 @@ namespace Hedgewitch.Combat.Tests
             Health player = SpawnPlayer(new Vector3(0f, 1f, 6f));
             BruiserAgent bruiser = SpawnBruiser(new Vector3(0f, 1.1f, -6f));
 
-            yield return WaitUntil(() => player.Current < player.Max, 14f);
+            yield return WaitUntil(() => player.Current < player.Max, 8f);
 
             Assert.Less(player.Current, player.Max, "the bruiser never reached the player behind the wall");
             Assert.Greater(bruiser.transform.position.z, 0f, "it should have gone round to the player's side");

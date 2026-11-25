@@ -84,6 +84,8 @@ namespace Hedgewitch.Combat
         private Vector3 strikeDirection;
         private Vector3 modelRestScale = Vector3.one;
         private bool struck;
+        private readonly ContactPoint[] contactBuffer = new ContactPoint[8];
+        private Vector3 obstacleNormal;
 
         public event Action<BruiserAgent> AttackStarted;
         public event Action<BruiserAgent, IDamageable> AttackLanded;
@@ -198,6 +200,32 @@ namespace Hedgewitch.Combat
                     }
 
                     break;
+            }
+
+            // Contacts arrive after this step's physics so each one only steers the next step
+            obstacleNormal = Vector3.zero;
+        }
+
+        // Remembers which way static walls push back so steering can slide along them
+        private void OnCollisionStay(Collision collision)
+        {
+            Rigidbody other = collision.rigidbody;
+            if (other != null && !other.isKinematic)
+            {
+                return;
+            }
+
+            int count = collision.GetContacts(contactBuffer);
+            for (int i = 0; i < count; i++)
+            {
+                Vector3 normal = contactBuffer[i].normal;
+                if (normal.y > 0.5f)
+                {
+                    continue;
+                }
+
+                normal.y = 0f;
+                obstacleNormal += normal;
             }
         }
 
@@ -421,6 +449,7 @@ namespace Hedgewitch.Combat
         private void Steer(Vector3 direction, float speed, float deltaTime)
         {
             direction.y = 0f;
+            direction = SlideAlongObstacle(direction);
             Vector3 velocity = body.linearVelocity;
             Vector3 planar = new Vector3(velocity.x, 0f, velocity.z);
             Vector3 desired = direction.sqrMagnitude > 1e-4f ? direction.normalized * speed : Vector3.zero;
@@ -430,6 +459,26 @@ namespace Hedgewitch.Combat
             {
                 Face(desired, deltaTime);
             }
+        }
+
+        // Drops the part of the push that goes into a wall so the body slides round corners instead of wedging on them
+        private Vector3 SlideAlongObstacle(Vector3 direction)
+        {
+            if (obstacleNormal.sqrMagnitude < 1e-4f || direction.sqrMagnitude < 1e-4f)
+            {
+                return direction;
+            }
+
+            Vector3 normal = obstacleNormal.normalized;
+            float into = Vector3.Dot(direction.normalized, normal);
+            if (into >= 0f)
+            {
+                return direction;
+            }
+
+            // Head on there is no side to slide to so keep pushing and let the path move on
+            Vector3 slide = direction.normalized - normal * into;
+            return slide.sqrMagnitude > 0.01f ? slide.normalized * direction.magnitude : direction;
         }
 
         private void Brake()
