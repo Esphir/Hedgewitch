@@ -32,6 +32,9 @@ namespace Hedgewitch.Combat
 
         [SerializeField] private LayerMask sightBlockers = 1;
 
+        [Tooltip("Seconds it keeps chasing after the player hits it, however far away or out of sight they are. Each hit restarts the timer.")]
+        [Min(0f)] [SerializeField] private float provokedMemory = 8f;
+
         [Header("Movement")]
         [Min(0f)] [SerializeField] private float runSpeed = 5.6f;
         [Min(0f)] [SerializeField] private float wanderSpeed = 1.6f;
@@ -71,6 +74,8 @@ namespace Hedgewitch.Combat
 
         private Rigidbody body;
         private NavMeshAgent agent;
+        private Health health;
+        private float provokedUntil = float.NegativeInfinity;
         private State state = State.Wander;
         private float stateTimer;
         private float repathTimer;
@@ -86,6 +91,8 @@ namespace Hedgewitch.Combat
         public State CurrentState => state;
 
         public Transform Target => target;
+
+        public bool IsProvoked => Time.time < provokedUntil;
 
         private void Awake()
         {
@@ -110,6 +117,38 @@ namespace Hedgewitch.Combat
 
             home = transform.position;
             wanderPoint = home;
+
+            // Subscribed for the whole lifetime so hits still register while a stagger has this switched off
+            health = GetComponent<Health>();
+            if (health != null)
+            {
+                health.Damaged += HandleDamaged;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            if (health != null)
+            {
+                health.Damaged -= HandleDamaged;
+            }
+        }
+
+        // Getting hit by the player locks on from any range or angle
+        private void HandleDamaged(DamageInfo info, DamageResult result)
+        {
+            Transform attacker = info.Source != null ? info.Source.transform : null;
+            if (result.Defeated || attacker == null || !(attacker.CompareTag("Player") || attacker == target))
+            {
+                return;
+            }
+
+            target = attacker;
+            provokedUntil = Time.time + provokedMemory;
+            if (state == State.Wander)
+            {
+                Enter(State.Chase);
+            }
         }
 
         private void OnEnable()
@@ -191,7 +230,7 @@ namespace Hedgewitch.Combat
             }
 
             float distance = FlatDistance(transform.position, target.position);
-            if (distance > loseInterestRange)
+            if (distance > loseInterestRange && !IsProvoked)
             {
                 Enter(State.Wander);
                 return;

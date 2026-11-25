@@ -38,11 +38,11 @@ namespace Hedgewitch.Combat.Tests
         }
 
         // Floor plus an optional see through wall then a baked navmesh
-        private void BuildArena(bool wall)
+        private void BuildArena(bool wall, float size = 30f)
         {
             GameObject room = new GameObject("Test Room");
             spawned.Add(room);
-            Box(room.transform, new Vector3(0f, -0.5f, 0f), new Vector3(30f, 1f, 30f));
+            Box(room.transform, new Vector3(0f, -0.5f, 0f), new Vector3(size, 1f, size));
             if (wall)
             {
                 // Ignore Raycast keeps line of sight so only pathfinding can get round it
@@ -124,6 +124,50 @@ namespace Hedgewitch.Combat.Tests
 
             Assert.Less(player.Current, player.Max, "the bruiser never reached the player behind the wall");
             Assert.Greater(bruiser.transform.position.z, 0f, "it should have gone round to the player's side");
+        }
+
+        [UnityTest]
+        public IEnumerator LocksOnWhenShotFromBeyondItsDetectionRange()
+        {
+            BuildArena(false, 80f);
+            Health player = SpawnPlayer(new Vector3(0f, 1f, 25f));
+            BruiserAgent bruiser = SpawnBruiser(new Vector3(0f, 1.1f, -25f));
+            yield return new WaitForSeconds(0.5f);
+            Assert.AreEqual(BruiserAgent.State.Wander, bruiser.CurrentState, "50 m away it should not notice the player yet");
+
+            float startDistance = Vector3.Distance(bruiser.transform.position, player.transform.position);
+            bruiser.GetComponent<Health>().ApplyDamage(new DamageInfo
+            {
+                Amount = 5f,
+                Point = bruiser.transform.position,
+                Direction = Vector3.back,
+                Tags = DamageTags.Ranged,
+                Source = player.gameObject
+            });
+
+            Assert.IsTrue(bruiser.IsProvoked);
+            yield return new WaitForSeconds(3f);
+
+            Assert.AreEqual(BruiserAgent.State.Chase, bruiser.CurrentState, "should still be chasing past its give up range");
+            Assert.AreSame(player.transform, bruiser.Target);
+            Assert.Less(Vector3.Distance(bruiser.transform.position, player.transform.position), startDistance - 8f, "should be closing in");
+        }
+
+        [UnityTest]
+        public IEnumerator DamageFromSomethingElseDoesNotProvoke()
+        {
+            BuildArena(false, 80f);
+            SpawnPlayer(new Vector3(0f, 1f, 25f));
+            BruiserAgent bruiser = SpawnBruiser(new Vector3(0f, 1.1f, -25f));
+            GameObject thorns = new GameObject("Thorns");
+            spawned.Add(thorns);
+            yield return null;
+
+            bruiser.GetComponent<Health>().ApplyDamage(new DamageInfo { Amount = 5f, Point = bruiser.transform.position, Source = thorns });
+            yield return new WaitForSeconds(0.3f);
+
+            Assert.IsFalse(bruiser.IsProvoked);
+            Assert.AreEqual(BruiserAgent.State.Wander, bruiser.CurrentState);
         }
 
         [UnityTest]
