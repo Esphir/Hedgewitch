@@ -1,0 +1,286 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5153854333560587276
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 744337398011893336}
+  - component: {fileID: 1090088672144915667}
+  - component: {fileID: 393441070521496881}
+  - component: {fileID: 4142345033629489732}
+  - component: {fileID: 4723333483575067130}
+  - component: {fileID: 8184393818490830428}
+  - component: {fileID: 689701259792937981}
+  - component: {fileID: 7506753461314987335}
+  - component: {fileID: 4461274269876632084}
+  - component: {fileID: 5187464517457916379}
+  - component: {fileID: 8689302188920691153}
+  m_Layer: 0
+  m_Name: BasicEnemy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &744337398011893336
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5153854333560587276}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.8, y: 0.9, z: 0.8}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &1090088672144915667
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5153854333560587276}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!136 &393441070521496881
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5153854333560587276}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &4142345033629489732
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5153854333560587276}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: aebc70e63699ce1498a90040d4950f19, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!54 &4723333483575067130
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5153854333560587276}
+  serializedVersion: 5
+  m_Mass: 45
+  m_LinearDamping: 0
+  m_AngularDamping: 0.1
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 112
+  m_CollisionDetection: 0
+--- !u!114 &8184393818490830428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5153854333560587276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d68732a0ad5f3934a957b90ec14e507e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.Enemies.EnemySuctionResponse
+  vacuumable: 1
+  vacuumCategory: 8
+  vacuumMass: 3
+  suctionResistance: 0
+  captureRadiusBonus: 0
+  canBeCaptured: 1
+  sampleFromColliderBounds: 1
+  enemyStrength: 75
+  stamina: 2.5
+  staminaRecovery: 0.6
+  exhaustedResistance: 0.15
+  braceDamping: 2.5
+  gripBuildRate: 1.2
+  gripDecayRate: 0.5
+  captureGripThreshold: 0.85
+  escapeInterval: 1.1
+  escapeLungeSpeed: 2.5
+  escapeGripThreshold: 0.12
+  escapeGripRelief: 0.25
+  escapeStaminaCost: 0.5
+  animator: {fileID: 0}
+  pressureParameter: VacuumPressure
+  vacuumedParameter: IsVacuumed
+  struggleParameter: Struggle
+  faceNozzleWhileSucked: 1
+  faceNozzleTurnSpeed: 420
+  captureOutcome: 1
+--- !u!114 &689701259792937981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5153854333560587276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4343bd8be7b404e46adc344804b6708b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.Enemies.BasicEnemyAgent
+  wanderSpeed: 1.8
+  chaseSpeed: 3.4
+  fleeSpeed: 4.2
+  acceleration: 14
+  struggleSteerEffort: 0.4
+  turnSpeed: 540
+  target: {fileID: 0}
+  aggroRange: 9
+  loseInterestRange: 14
+  sightBlockers:
+    serializedVersion: 2
+    m_Bits: 1
+  wanderRadius: 5
+  repathInterval: 2.5
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 1
+  groundCheckDistance: 0.2
+--- !u!114 &7506753461314987335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5153854333560587276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e76ef8e60fe42674987bc64eb96add2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Hedgewitch.Vacuum::Hedgewitch.Vacuum.Enemies.EnemyDefeatOnCapture
+  bounty: 10
+  captureEffectPrefab: {fileID: 0}
+  defeated:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &4461274269876632084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5153854333560587276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a36baa118ed84a458a8bee19ac273f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Hedgewitch.Combat::Hedgewitch.Combat.Health
+  maxHealth: 120
+  invulnerabilityAfterHit: 0
+  defeatOutcome: 1
+  defeatDelay: 0.35
+--- !u!114 &5187464517457916379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5153854333560587276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e93a03e3e22c1f34abce3edbd3b04f06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Hedgewitch.Combat::Hedgewitch.Combat.HitReaction
+  body: {fileID: 0}
+  knockbackResistance: 0.35
+  staggerMultiplier: 1
+  disableWhileStaggered:
+  - {fileID: 689701259792937981}
+  flashColor: {r: 1, g: 0.95, b: 0.85, a: 1}
+  flashDuration: 0.09
+  flashRenderers: []
+--- !u!114 &8689302188920691153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5153854333560587276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87752a4bfb7260c4787147ed055a0cb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Hedgewitch.Audio.Hooks::Hedgewitch.Audio.Hooks.EnemyAudio
+  profile: {fileID: 11400000, guid: fc8f7ed7689d9c74782cf27ec735e8a2, type: 2}
+  strideLength: 1.1

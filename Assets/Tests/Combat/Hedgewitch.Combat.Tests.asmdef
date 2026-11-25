@@ -5,7 +5,8 @@
         "Hedgewitch.Combat",
         "Hedgewitch.Vacuum",
         "UnityEngine.TestRunner",
-        "UnityEditor.TestRunner"
+        "UnityEditor.TestRunner",
+        "Unity.AI.Navigation"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

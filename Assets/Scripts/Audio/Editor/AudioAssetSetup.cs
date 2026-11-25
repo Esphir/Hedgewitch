@@ -117,6 +117,13 @@ namespace Hedgewitch.Audio.EditorTools
                 ("hurt", new EventSpec("Enemy_Basic_Hurt", "Enemies", 1f, 4, 0.05f).Varied(1f, 0f)),
                 ("death", new EventSpec("Enemy_Basic_Death", "Enemies", 1f, 4, 0.05f).Varied(1f, 0f))
             }),
+            (typeof(EnemySfxProfile), "EnemySfx_Bruiser", new[]
+            {
+                ("footsteps", new EventSpec("Enemy_Bruiser_Footsteps", "Enemies", 1f, 6, 0.05f).Varied(1f, 0.15f)),
+                ("attack", new EventSpec("Enemy_Bruiser_Attack", "Enemies", 1f, 4, 0.1f).Varied(1f, 0f)),
+                ("hurt", new EventSpec("Enemy_Bruiser_Hurt", "Enemies", 1f, 4, 0.05f).Varied(1f, 0f)),
+                ("death", new EventSpec("Enemy_Bruiser_Death", "Enemies", 1f, 4, 0.05f).Varied(1f, 0f))
+            }),
             (typeof(MusicLibrary), "MusicLibrary", new[]
             {
                 ("titleTrack", new EventSpec("Music_Title", "Music", 0f, 1, 0f, true)),

@@ -2,7 +2,9 @@
     "name": "Hedgewitch.Combat",
     "rootNamespace": "Hedgewitch.Combat",
     "references": [
-        "Hedgewitch.Vacuum"
+        "Hedgewitch.Vacuum",
+        "Hedgewitch.Audio",
+        "Unity.InputSystem"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

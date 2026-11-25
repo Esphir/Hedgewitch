@@ -18,6 +18,7 @@ namespace Hedgewitch.Audio.Hooks
         private readonly FootstepTracker footsteps = new FootstepTracker();
         private Health health;
         private BasicEnemyAgent agent;
+        private BruiserAgent bruiser;
         private bool dead;
 
         public EnemySfxProfile Profile => profile;
@@ -26,6 +27,7 @@ namespace Hedgewitch.Audio.Hooks
         {
             health = GetComponent<Health>();
             agent = GetComponent<BasicEnemyAgent>();
+            bruiser = GetComponent<BruiserAgent>();
         }
 
         private void OnEnable()
@@ -37,6 +39,11 @@ namespace Hedgewitch.Audio.Hooks
                 health.Damaged += HandleDamaged;
                 health.Defeated += HandleDefeated;
                 dead = !health.IsAlive;
+            }
+
+            if (bruiser != null)
+            {
+                bruiser.AttackStarted += HandleAttackStarted;
             }
 
             if (!dead)
@@ -51,6 +58,11 @@ namespace Hedgewitch.Audio.Hooks
             {
                 health.Damaged -= HandleDamaged;
                 health.Defeated -= HandleDefeated;
+            }
+
+            if (bruiser != null)
+            {
+                bruiser.AttackStarted -= HandleAttackStarted;
             }
 
             MusicThreats.Unregister(transform);
@@ -85,6 +97,11 @@ namespace Hedgewitch.Audio.Hooks
         public void PlayAttack()
         {
             Play(profile != null ? profile.Attack : null);
+        }
+
+        private void HandleAttackStarted(BruiserAgent attacker)
+        {
+            PlayAttack();
         }
 
         private void HandleDamaged(DamageInfo info, DamageResult result)
