@@ -9867,6 +9867,7 @@ GameObject:
   - component: {fileID: 4976742242258224002}
   - component: {fileID: 3240034422771579776}
   - component: {fileID: 4398826847327977088}
+  - component: {fileID: 6785063483499596948}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -10340,31 +10341,54 @@ MonoBehaviour:
   dash: {fileID: 0}
   inventory: {fileID: 0}
   body: {fileID: 8769248994187369399}
-  animator: {fileID: 0}
-  dashTrigger: Dash
-  broomRideTrigger: DashBroomRide
-  broomSweepTrigger: DashBroomSweep
-  proceduralPoses: 1
+  animator: {fileID: 6785063483499596948}
+  dashState: Dash
+  broomRideState: DashBroomRide
+  broomSweepState: DashBroomSweep
+  matchDashDuration: 1
   wind: {fileID: 3333864145954670579}
   dust: {fileID: 8372134863098847793}
   regularDustBurst: 10
-  blendIn: 0.05
-  blendOut: 0.08
-  rollDegrees: 360
-  rollCrouch: 0.72
-  rideLift: 0.35
-  rideSitSquash: 0.8
-  rideLean: 14
-  rideBobHeight: 0.04
-  rideBobRate: 18
-  sweepForward: 0.15
-  sweepHandleTilt: 14
-  sweepStandBack: 0.2
-  sweepStrokes: 2
-  sweepAngle: 14
-  sweepLean: 6
-  bristleTopDistance: 1.27
-  bristleTipDistance: 1.63
+  poses:
+    blendIn: 0.05
+    blendOut: 0.08
+    rollDegrees: 360
+    rollCrouch: 0.72
+    rideLift: 0.35
+    rideSitSquash: 0.8
+    rideLean: 14
+    rideBobHeight: 0.04
+    rideBobRate: 18
+    sweepForward: 0.15
+    sweepHandleTilt: 14
+    sweepStandBack: 0.2
+    sweepStrokes: 2
+    sweepAngle: 14
+    sweepLean: 6
+    bristleTopDistance: 1.27
+    bristleTipDistance: 1.63
+--- !u!95 &6785063483499596948
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6514952137255486513}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4b3ac25d4755b044dad34ff4f98cd5dd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7015670016033886915
 GameObject:
   m_ObjectHideFlags: 0

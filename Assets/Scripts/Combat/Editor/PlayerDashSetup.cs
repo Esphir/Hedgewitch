@@ -1,5 +1,7 @@
-// Adds the dash its placeholder poses and its wind and dust effects to the Player prefab and is safe to rerun
+// Adds the dash its animation clips and its wind and dust effects to the Player prefab and is safe to rerun
+using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.Animations;
 using UnityEngine;
 
 namespace Hedgewitch.Combat.EditorTools
@@ -10,9 +12,32 @@ namespace Hedgewitch.Combat.EditorTools
         private const string MaterialFolder = "Assets/Demo/Materials";
         private const string FxMaterialPath = MaterialFolder + "/DashFx.mat";
         private const string UrpParticleMaterial = "Packages/com.unity.render-pipelines.universal/Runtime/Materials/ParticlesUnlit.mat";
+        public const string AnimationFolder = "Assets/Animations/Player";
+        public const string ControllerPath = AnimationFolder + "/PlayerDash.controller";
+        private const float BakeFrameRate = 60f;
 
         [MenuItem("Tools/Hedgewitch/Player/Set Up Dash", false, 50)]
         public static void SetUpPlayerDash()
+        {
+            Build(false);
+        }
+
+        // Replaces the clips with fresh bakes of the pose settings and loses any hand edits
+        [MenuItem("Tools/Hedgewitch/Player/Rebake Dash Clips", false, 51)]
+        public static void RebakeDashClips()
+        {
+            if (!Application.isBatchMode && !EditorUtility.DisplayDialog(
+                    "Rebake dash clips",
+                    "This overwrites Dash, DashBroomRide and DashBroomSweep with fresh bakes from the Dash Animator's pose settings. Any edits made in the Animation window are lost.",
+                    "Rebake", "Cancel"))
+            {
+                return;
+            }
+
+            Build(true);
+        }
+
+        private static void Build(bool overwriteClips)
         {
             Material fxMaterial = EnsureFxMaterial();
 
@@ -41,6 +66,11 @@ namespace Hedgewitch.Combat.EditorTools
                 data.FindProperty("dust").objectReferenceValue = dust;
                 data.ApplyModifiedPropertiesWithoutUndo();
 
+                Animator clipPlayer = EnsureAnimator(contents, animator, body, overwriteClips);
+                data.Update();
+                data.FindProperty("animator").objectReferenceValue = clipPlayer;
+                data.ApplyModifiedPropertiesWithoutUndo();
+
                 PrefabUtility.SaveAsPrefabAsset(contents, PlayerPrefabPath);
             }
             finally
@@ -50,6 +80,234 @@ namespace Hedgewitch.Combat.EditorTools
 
             AssetDatabase.SaveAssets();
             Debug.Log("[Dash] Player dash is set up.");
+        }
+
+        // Off by default because DashAnimator switches it on only while dashing
+        private static Animator EnsureAnimator(GameObject root, DashAnimator look, Transform body, bool overwriteClips)
+        {
+            PlayerDash dash = root.GetComponent<PlayerDash>();
+            BroomWeapon broom = root.GetComponentInChildren<BroomWeapon>(true);
+            Transform pivot = broom != null ? broom.SwingPivot : null;
+            DashRig rig = DashRig.Capture(root.transform, body, pivot);
+
+            EnsureFolder(AnimationFolder);
+            Dictionary<DashStyle, AnimationClip> clips = new Dictionary<DashStyle, AnimationClip>();
+            foreach (DashStyle style in new[] { DashStyle.Regular, DashStyle.BroomRide, DashStyle.BroomSweep })
+            {
+                string name = look.StateFor(style);
+                string path = $"{AnimationFolder}/{name}.anim";
+                AnimationClip clip = AssetDatabase.LoadAssetAtPath<AnimationClip>(path);
+                bool fresh = clip == null;
+                if (fresh)
+                {
+                    clip = new AnimationClip { name = name };
+                    AssetDatabase.CreateAsset(clip, path);
+                }
+
+                if (fresh || overwriteClips)
+                {
+                    BakeClip(clip, style, dash.MoveFor(style).duration, look.Poses, rig, root.transform, body, pivot);
+                }
+
+                clips[style] = clip;
+            }
+
+            AnimatorController controller = EnsureController(look, clips);
+
+            Animator animator = root.GetComponent<Animator>();
+            if (animator == null)
+            {
+                animator = root.AddComponent<Animator>();
+            }
+
+            animator.runtimeAnimatorController = controller;
+            animator.applyRootMotion = false;
+            animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+            animator.enabled = false;
+            return animator;
+        }
+
+        // Samples the shared pose maths into keys the Animation window can edit
+        private static void BakeClip(AnimationClip clip, DashStyle style, float duration, DashPoseSettings settings, DashRig rig,
+            Transform root, Transform body, Transform pivot)
+        {
+            clip.ClearCurves();
+            clip.frameRate = BakeFrameRate;
+
+            string bodyPath = AnimationUtility.CalculateTransformPath(body, root);
+            bool animateBroom = style != DashStyle.Regular && pivot != null;
+            string broomPath = animateBroom ? AnimationUtility.CalculateTransformPath(pivot, root) : null;
+
+            // Broom keys are local to the pivot's parent rather than the player root
+            Vector3 parentPosition = Vector3.zero;
+            Quaternion parentRotation = Quaternion.identity;
+            if (animateBroom && pivot.parent != null)
+            {
+                parentPosition = root.InverseTransformPoint(pivot.parent.position);
+                parentRotation = Quaternion.Inverse(root.rotation) * pivot.parent.rotation;
+            }
+
+            Quaternion inverseParent = Quaternion.Inverse(parentRotation);
+            CurveSet curves = new CurveSet();
+            int frames = Mathf.Max(2, Mathf.CeilToInt(duration * BakeFrameRate));
+            for (int i = 0; i <= frames; i++)
+            {
+                float time = duration * i / frames;
+                DashPose pose = DashPoseSolver.Evaluate(style, time, duration, settings, rig);
+
+                curves.Position(bodyPath, time, pose.BodyPosition);
+                curves.Rotation(bodyPath, time, pose.BodyRotation);
+                curves.Scale(bodyPath, time, pose.BodyScale);
+
+                if (animateBroom)
+                {
+                    curves.Position(broomPath, time, inverseParent * (pose.BroomPosition - parentPosition));
+                    curves.Rotation(broomPath, time, inverseParent * pose.BroomRotation);
+                }
+            }
+
+            curves.WriteTo(clip);
+            clip.EnsureQuaternionContinuity();
+
+            AnimationClipSettings clipSettings = AnimationUtility.GetAnimationClipSettings(clip);
+            clipSettings.loopTime = false;
+            AnimationUtility.SetAnimationClipSettings(clip, clipSettings);
+            EditorUtility.SetDirty(clip);
+        }
+
+        // One state per clip and no transitions because the code plays states directly
+        private static AnimatorController EnsureController(DashAnimator look, Dictionary<DashStyle, AnimationClip> clips)
+        {
+            AnimatorController controller = AssetDatabase.LoadAssetAtPath<AnimatorController>(ControllerPath);
+            if (controller == null)
+            {
+                controller = AnimatorController.CreateAnimatorControllerAtPath(ControllerPath);
+            }
+
+            AnimatorStateMachine machine = controller.layers[0].stateMachine;
+
+            AnimatorState idle = FindState(machine, "Idle") ?? machine.AddState("Idle", new Vector3(260f, 0f, 0f));
+            idle.writeDefaultValues = false;
+            machine.defaultState = idle;
+
+            float row = 80f;
+            foreach (KeyValuePair<DashStyle, AnimationClip> entry in clips)
+            {
+                string name = look.StateFor(entry.Key);
+                AnimatorState state = FindState(machine, name) ?? machine.AddState(name, new Vector3(260f, row, 0f));
+                row += 70f;
+
+                // Write defaults off so a clip never touches what it does not animate
+                state.writeDefaultValues = false;
+                if (state.motion == null)
+                {
+                    state.motion = entry.Value;
+                }
+            }
+
+            EditorUtility.SetDirty(controller);
+            return controller;
+        }
+
+        private static AnimatorState FindState(AnimatorStateMachine machine, string name)
+        {
+            foreach (ChildAnimatorState child in machine.states)
+            {
+                if (child.state.name == name)
+                {
+                    return child.state;
+                }
+            }
+
+            return null;
+        }
+
+        private static void EnsureFolder(string path)
+        {
+            if (AssetDatabase.IsValidFolder(path))
+            {
+                return;
+            }
+
+            int slash = path.LastIndexOf('/');
+            string parent = path.Substring(0, slash);
+            EnsureFolder(parent);
+            AssetDatabase.CreateFolder(parent, path.Substring(slash + 1));
+        }
+
+        // Collects keys per property then writes each as a curve with straight-line tangents
+        private class CurveSet
+        {
+            private readonly Dictionary<(string path, string property), List<Keyframe>> keys =
+                new Dictionary<(string path, string property), List<Keyframe>>();
+
+            private readonly Dictionary<string, Quaternion> lastRotation = new Dictionary<string, Quaternion>();
+
+            public void Position(string path, float time, Vector3 value)
+            {
+                Add(path, "m_LocalPosition.x", time, value.x);
+                Add(path, "m_LocalPosition.y", time, value.y);
+                Add(path, "m_LocalPosition.z", time, value.z);
+            }
+
+            public void Scale(string path, float time, Vector3 value)
+            {
+                Add(path, "m_LocalScale.x", time, value.x);
+                Add(path, "m_LocalScale.y", time, value.y);
+                Add(path, "m_LocalScale.z", time, value.z);
+            }
+
+            // Keeps each key on the same side as the last so the roll never spins the long way
+            public void Rotation(string path, float time, Quaternion value)
+            {
+                if (lastRotation.TryGetValue(path, out Quaternion previous) && Quaternion.Dot(previous, value) < 0f)
+                {
+                    value = new Quaternion(-value.x, -value.y, -value.z, -value.w);
+                }
+
+                lastRotation[path] = value;
+                Add(path, "m_LocalRotation.x", time, value.x);
+                Add(path, "m_LocalRotation.y", time, value.y);
+                Add(path, "m_LocalRotation.z", time, value.z);
+                Add(path, "m_LocalRotation.w", time, value.w);
+            }
+
+            private void Add(string path, string property, float time, float value)
+            {
+                if (!keys.TryGetValue((path, property), out List<Keyframe> list))
+                {
+                    list = new List<Keyframe>();
+                    keys[(path, property)] = list;
+                }
+
+                list.Add(new Keyframe(time, value));
+            }
+
+            public void WriteTo(AnimationClip clip)
+            {
+                foreach (KeyValuePair<(string path, string property), List<Keyframe>> entry in keys)
+                {
+                    List<Keyframe> list = entry.Value;
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        Keyframe key = list[i];
+                        float before = i > 0 ? Slope(list[i - 1], key) : 0f;
+                        float after = i < list.Count - 1 ? Slope(key, list[i + 1]) : before;
+                        key.inTangent = i > 0 ? before : after;
+                        key.outTangent = after;
+                        list[i] = key;
+                    }
+
+                    EditorCurveBinding binding = EditorCurveBinding.FloatCurve(entry.Key.path, typeof(Transform), entry.Key.property);
+                    AnimationUtility.SetEditorCurve(clip, binding, new AnimationCurve(list.ToArray()));
+                }
+            }
+
+            private static float Slope(Keyframe a, Keyframe b)
+            {
+                float span = b.time - a.time;
+                return span > 1e-6f ? (b.value - a.value) / span : 0f;
+            }
         }
 
         // Moves the capsule look onto a child so poses can tilt it without moving the collider

@@ -189,6 +189,76 @@ namespace Hedgewitch.Combat.Tests
         }
 
         [UnityTest]
+        public IEnumerator ClipsPlayOnlyDuringTheDashAndLeaveTheBroomFreeToSwing()
+        {
+            Assert.IsTrue(look.UsesClips, "the Player should carry the PlayerDash controller");
+            Animator animator = look.Animator;
+            Assert.IsFalse(animator.enabled, "the animator stays off between dashes");
+
+            BroomWeapon broom = inventory.GetWeapon<BroomWeapon>();
+            inventory.Equip(broom.Slot);
+            yield return null;
+
+            // How far a light swing turns the broom before any dash has run
+            float baseline = 0f;
+            yield return MeasureSwing(broom, value => baseline = value);
+            Assert.Greater(baseline, 20f, "a light swing should visibly turn the broom");
+            yield return new WaitForSeconds(1f);
+
+            Assert.IsTrue(dash.TryDash(Vector3.forward));
+            yield return null;
+            Assert.IsTrue(animator.enabled);
+            Assert.IsTrue(animator.GetCurrentAnimatorStateInfo(0).IsName(look.StateFor(dash.Style)), "should be playing the ride clip");
+
+            yield return FinishDash();
+            Assert.IsFalse(animator.enabled, "switched off again after the dash");
+
+            yield return new WaitForSeconds(0.5f);
+            float afterDash = 0f;
+            yield return MeasureSwing(broom, value => afterDash = value);
+            Assert.AreEqual(baseline, afterDash, baseline * 0.25f, "the swing code should move the broom just as far after a dash");
+        }
+
+        // Largest turn away from the starting pose during one light swing
+        private static IEnumerator MeasureSwing(BroomWeapon broom, System.Action<float> report)
+        {
+            Quaternion rest = broom.SwingPivot.localRotation;
+            broom.PressLight();
+            float largest = 0f;
+            float end = Time.time + 0.6f;
+            while (Time.time < end)
+            {
+                yield return null;
+                largest = Mathf.Max(largest, Quaternion.Angle(rest, broom.SwingPivot.localRotation));
+            }
+
+            report(largest);
+        }
+
+        [UnityTest]
+        public IEnumerator EachDashStateHasABakedClipThatEndsAtRest()
+        {
+#if UNITY_EDITOR
+            foreach (DashStyle style in new[] { DashStyle.Regular, DashStyle.BroomRide, DashStyle.BroomSweep })
+            {
+                string name = look.StateFor(style);
+                AnimationClip clip = UnityEditor.AssetDatabase.LoadAssetAtPath<AnimationClip>($"Assets/Animations/Player/{name}.anim");
+                Assert.IsNotNull(clip, $"{name}.anim is missing");
+                Assert.AreEqual(dash.MoveFor(style).duration, clip.length, 0.02f, $"{name} should last as long as its dash");
+
+                UnityEditor.EditorCurveBinding[] bindings = UnityEditor.AnimationUtility.GetCurveBindings(clip);
+                bool movesBroom = System.Array.Exists(bindings, b => b.path.EndsWith("Broom Pivot"));
+                Assert.AreEqual(style != DashStyle.Regular, movesBroom, $"only broom dashes should animate the broom ({name})");
+
+                UnityEditor.EditorCurveBinding bodyY = System.Array.Find(bindings, b => b.path == "Body" && b.propertyName == "m_LocalPosition.y");
+                AnimationCurve curve = UnityEditor.AnimationUtility.GetEditorCurve(clip, bodyY);
+                Assert.AreEqual(0f, curve.Evaluate(clip.length), 0.001f, $"{name} should finish with the body back at rest");
+            }
+#endif
+            yield break;
+        }
+
+        [UnityTest]
         public IEnumerator SpaceAndPadADashAndJumpIsUnbound()
         {
             yield return null;
