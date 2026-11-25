@@ -3,7 +3,12 @@
     "rootNamespace": "Hedgewitch.Combat.EditorTools",
     "references": [
         "Hedgewitch.Combat",
-        "Hedgewitch.Vacuum"
+        "Hedgewitch.Vacuum",
+        "Hedgewitch.Audio",
+        "Hedgewitch.Audio.Editor",
+        "Hedgewitch.Audio.Hooks",
+        "Unity.AI.Navigation",
+        "Unity.InputSystem"
     ],
     "includePlatforms": [
         "Editor"
