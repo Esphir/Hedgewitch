@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25c0150adb8e0a740b57567001cdefd5, type: 3}
   m_Name: GunSfx
   m_EditorClassIdentifier: Hedgewitch.Audio::Hedgewitch.Audio.GunSfxProfile
+  extraSounds: []
   equip: {fileID: 11400000, guid: 6f0ab752eb79f4940bc57a3438879383, type: 2}
   reload: {fileID: 11400000, guid: 2db866737b450f14b838a4dcd79818ff, type: 2}
   shoot: {fileID: 11400000, guid: b1d7c3806e354e948907f5ad3ef891da, type: 2}

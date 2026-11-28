@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72b778e83c6e1ad45aba8e955294b715, type: 3}
   m_Name: Player_Death
   m_EditorClassIdentifier: Hedgewitch.Audio::Hedgewitch.Audio.SoundEvent
-  eventName: 
-  clips: []
+  eventName: PlayerDeath
+  clips:
+  - {fileID: 8300000, guid: 47427f7e18c9ed649a8f2013946d872f, type: 3}
+  - {fileID: 8300000, guid: b22610d4b7ceff846b8475bb6e33030c, type: 3}
   output: {fileID: 1393994945047727352, guid: 6b56defc0ab54304c9284b6f3e3d0235, type: 2}
   volume: 1
   volumeVariation: 0

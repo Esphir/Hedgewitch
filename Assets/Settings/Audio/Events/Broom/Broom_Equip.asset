@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Broom_Equip
   m_EditorClassIdentifier: Hedgewitch.Audio::Hedgewitch.Audio.SoundEvent
   eventName: 
-  clips: []
+  clips:
+  - {fileID: 0}
   output: {fileID: 2120864182475350172, guid: 6b56defc0ab54304c9284b6f3e3d0235, type: 2}
   volume: 1
   volumeVariation: 0

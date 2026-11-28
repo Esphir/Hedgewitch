@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72b778e83c6e1ad45aba8e955294b715, type: 3}
   m_Name: Vacuum_PowerOff
   m_EditorClassIdentifier: Hedgewitch.Audio::Hedgewitch.Audio.SoundEvent
-  eventName: 
-  clips: []
+  eventName: HooverOff
+  clips:
+  - {fileID: 8300000, guid: d5cc99d51b4144646aed6643b178974c, type: 3}
   output: {fileID: 2120864182475350172, guid: 6b56defc0ab54304c9284b6f3e3d0235, type: 2}
-  volume: 1
+  volume: 0.4
   volumeVariation: 0
   pitchOffset: 0
   pitchVariation: 0

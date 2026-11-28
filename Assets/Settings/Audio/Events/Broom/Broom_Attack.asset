@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72b778e83c6e1ad45aba8e955294b715, type: 3}
   m_Name: Broom_Attack
   m_EditorClassIdentifier: Hedgewitch.Audio::Hedgewitch.Audio.SoundEvent
-  eventName: 
-  clips: []
+  eventName: BroomSwing
+  clips:
+  - {fileID: 8300000, guid: bc52bbd53419bba4daa0cc98acfd4cb3, type: 3}
   output: {fileID: 2120864182475350172, guid: 6b56defc0ab54304c9284b6f3e3d0235, type: 2}
   volume: 1
   volumeVariation: 0.1
   pitchOffset: 0
-  pitchVariation: 1.5
+  pitchVariation: 3
   spatialBlend: 1
   minDistance: 2
   maxDistance: 30

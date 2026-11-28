@@ -12,13 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72b778e83c6e1ad45aba8e955294b715, type: 3}
   m_Name: Player_Footsteps
   m_EditorClassIdentifier: Hedgewitch.Audio::Hedgewitch.Audio.SoundEvent
-  eventName: 
-  clips: []
+  eventName: PlayerFootsteps
+  clips:
+  - {fileID: 8300000, guid: e78bae81e46257c498fac746ac017c69, type: 3}
+  - {fileID: 8300000, guid: af1d5943a84af9341b3271c05333a851, type: 3}
+  - {fileID: 8300000, guid: 0280d11acb7621d4c8a8a5e5d8055c5e, type: 3}
   output: {fileID: 1393994945047727352, guid: 6b56defc0ab54304c9284b6f3e3d0235, type: 2}
-  volume: 1
+  volume: 0.5
   volumeVariation: 0.15
   pitchOffset: 0
-  pitchVariation: 1
+  pitchVariation: 0
   spatialBlend: 1
   minDistance: 2
   maxDistance: 30

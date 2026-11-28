@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72b778e83c6e1ad45aba8e955294b715, type: 3}
   m_Name: Player_OpenInventory
   m_EditorClassIdentifier: Hedgewitch.Audio::Hedgewitch.Audio.SoundEvent
-  eventName: 
-  clips: []
+  eventName: OpenInventory
+  clips:
+  - {fileID: 8300000, guid: 64c12347d276a58418ee7f9047a00833, type: 3}
   output: {fileID: -2620354223324061430, guid: 6b56defc0ab54304c9284b6f3e3d0235, type: 2}
   volume: 1
   volumeVariation: 0

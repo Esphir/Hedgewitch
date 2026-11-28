@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72b778e83c6e1ad45aba8e955294b715, type: 3}
   m_Name: Enemy_Basic_Attack
   m_EditorClassIdentifier: Hedgewitch.Audio::Hedgewitch.Audio.SoundEvent
-  eventName: 
+  eventName: EnemyBasicFootstep
   clips: []
   output: {fileID: 6166831066798427719, guid: 6b56defc0ab54304c9284b6f3e3d0235, type: 2}
   volume: 1

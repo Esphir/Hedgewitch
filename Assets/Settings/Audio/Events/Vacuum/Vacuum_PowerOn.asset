@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Vacuum_PowerOn
   m_EditorClassIdentifier: Hedgewitch.Audio::Hedgewitch.Audio.SoundEvent
   eventName: 
-  clips: []
+  clips:
+  - {fileID: 8300000, guid: 836d19facbc959040b83ee5227e15844, type: 3}
   output: {fileID: 2120864182475350172, guid: 6b56defc0ab54304c9284b6f3e3d0235, type: 2}
-  volume: 1
+  volume: 0.4
   volumeVariation: 0
   pitchOffset: 0
   pitchVariation: 0

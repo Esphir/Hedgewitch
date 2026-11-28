@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72b778e83c6e1ad45aba8e955294b715, type: 3}
   m_Name: Broom_Hit
   m_EditorClassIdentifier: Hedgewitch.Audio::Hedgewitch.Audio.SoundEvent
-  eventName: 
-  clips: []
+  eventName: BroomHit
+  clips:
+  - {fileID: 8300000, guid: ac883f8c42ee9d9469aa3499b29e1da8, type: 3}
   output: {fileID: 2120864182475350172, guid: 6b56defc0ab54304c9284b6f3e3d0235, type: 2}
-  volume: 1
+  volume: 0.5
   volumeVariation: 0.1
   pitchOffset: 0
   pitchVariation: 1

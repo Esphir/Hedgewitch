@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72b778e83c6e1ad45aba8e955294b715, type: 3}
   m_Name: Hazard_Thorns_Hit
   m_EditorClassIdentifier: Hedgewitch.Audio::Hedgewitch.Audio.SoundEvent
-  eventName: 
-  clips: []
+  eventName: ThornHit
+  clips:
+  - {fileID: 8300000, guid: b117503387a974c4f84d3af578d493a5, type: 3}
   output: {fileID: -5151070870328419929, guid: 6b56defc0ab54304c9284b6f3e3d0235, type: 2}
   volume: 1
   volumeVariation: 0
-  pitchOffset: 0
+  pitchOffset: 15
   pitchVariation: 1
   spatialBlend: 1
   minDistance: 2
